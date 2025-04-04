@@ -1,7 +1,7 @@
 <template>
   <div v-if="modelValue" class="fixed inset-0 z-50 bg-black/80">
     <div class="ticket-popup-wrap">
-      <div class="close-btn">
+      <div class="close-btn" @click="$emit('update:modelValue', false)">
         <svg class="am-icon am-icon-ticket-popup-close_7da51bf2 am-icon-md">
           <symbol viewBox="0 0 56 56" id="ticket-popup-close_7da51bf2" class="">
             <g
@@ -79,130 +79,47 @@
       </div>
       <div class="ticket-content-wrapper">
         <div class="header-wrap">
-          <div class="header-title">
-            <font style="vertical-align: inherit"
-              ><font style="vertical-align: inherit">Awards</font></font
-            >
-          </div>
+          <div class="header-title">幸运大转盘</div>
         </div>
         <div class="ticket-popup">
           <div class="ticket-popup-wrapper">
             <div class="banner-wrap">
               <div class="swiper-slide">
-                <div class="item-name">Lucky Wheel Draw Fun</div>
+                <div class="item-name">幸运大转盘抽奖</div>
               </div>
             </div>
             <div class="content-wrapper">
-              <div class="title-wrap" data-stroke="লাকি হুইল ড্র মজা">
-                <font style="vertical-align: inherit"
-                  ><font style="vertical-align: inherit"
-                    >Lucky Wheel Draw Fun</font
-                  ></font
-                >
-              </div>
+              <div class="title-wrap">幸运大转盘</div>
               <div class="ticket-time">
                 <div class="time-top">
-                  <svg class="am-icon am-icon-ticket-clock_6710b9e2 am-icon-md">
-                    <symbol
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      viewBox="0 0 20.9 23.4"
-                      id="ticket-clock_6710b9e2"
-                      class=""
-                    >
-                      <!-- <style type="text/css" class="">
-                        #ticket-clock_6710b9e2 .st0 {
-                          fill-rule: evenodd;
-                          clip-rule: evenodd;
-                        }
-                      </style> -->
-                      <g class="">
-                        <g class="">
-                          <path
-                            d="M11.5,7.9c0-0.6-0.5-1-1-1s-1,0.4-1,1v5.6c0,0.4,0.2,0.7,0.5,0.9l4.1,2.3c0.5,0.3,1.1,0.1,1.4-0.4    c0.3-0.5,0.1-1.1-0.4-1.4l-3.6-2L11.5,7.9z"
-                            class=""
-                          ></path>
-                          <path
-                            class="st0"
-                            d="M19.1,7.7c1.1,1.6,1.8,3.6,1.8,5.6c0,5.5-4.7,10-10.4,10C4.7,23.4,0,18.9,0,13.3c0-2.1,0.7-4,1.8-5.6L3,6.3    C4.3,5,5.8,4.1,7.6,3.7c0,0,1.3-0.4,2.8-0.4c1.4,0,2.8,0.4,2.8,0.4C15,4.1,16.6,5,17.9,6.3L19.1,7.7z M10.4,5.3    c-4.6,0-8.3,3.6-8.3,8s3.7,8,8.3,8c4.6,0,8.3-3.6,8.3-8S15,5.3,10.4,5.3z"
-                          ></path>
-                        </g>
-                        <path
-                          class="st0"
-                          d="M14.9,2.2H6c-0.6,0-1.1-0.5-1.1-1.1v0C4.9,0.5,5.4,0,6,0l8.8,0C15.5,0,16,0.5,16,1.1v0   C16,1.7,15.5,2.2,14.9,2.2z"
-                        ></path>
-                      </g>
-                    </symbol>
-                    <use
-                      xlink:href="#ticket-clock_6710b9e2"
-                      __h2d_shadowroot="2938"
-                      class=""
-                    ></use>
-                  </svg>
-                  <div class="title-text">
-                    <font style="vertical-align: inherit"
-                      ><font style="vertical-align: inherit"
-                        >Remaining time</font
-                      ></font
-                    >
-                  </div>
+                  <!-- <TimeTick /> -->
+                  <div class="title-text">剩余时间</div>
                 </div>
                 <div class="time-bottom">
                   <div class="wysiwyg">
                     <div class="time-item day">
                       <div class="num">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit">4</font></font
-                        >
+                        {{ timeLeft.days }}
                       </div>
-                      <div class="title">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit"
-                            >Day</font
-                          ></font
-                        >
-                      </div>
+                      <div class="title">天</div>
                     </div>
                     <div class="time-item">
                       <div class="num">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit">22</font></font
-                        >
+                        {{ timeLeft.hours }}
                       </div>
-                      <div class="title">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit"
-                            >Bell</font
-                          ></font
-                        >
-                      </div>
+                      <div class="title">时</div>
                     </div>
                     <div class="time-item">
                       <div class="num">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit">28</font></font
-                        >
+                        {{ timeLeft.minutes }}
                       </div>
-                      <div class="title">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit"
-                            >Minute</font
-                          ></font
-                        >
-                      </div>
+                      <div class="title">分</div>
                     </div>
                     <div class="time-item">
                       <div class="num">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit">51</font></font
-                        >
+                        {{ timeLeft.seconds }}
                       </div>
-                      <div class="title">
-                        <font style="vertical-align: inherit"
-                          ><font style="vertical-align: inherit"
-                            >Seconds</font
-                          ></font
-                        >
-                      </div>
+                      <div class="title">秒</div>
                     </div>
                   </div>
                 </div>
@@ -213,153 +130,59 @@
                     <div class="wheel_container">
                       <div class="prize_wheel_root">
                         <div class="wheel_bg">
-                          <div class="wheel_content number_0">
-                            <ul class="">
-                              <li class="item-0">
-                                <div class="rewardItem item-MERCHANDISE">
+                          <div class="wheel_content" :class="wheelNumberClass">
+                            <ul :style="rotateStyle">
+                              <li
+                                v-for="(prize, index) in prizeList"
+                                :key="prize.prize_id"
+                                :class="`item-${index}`"
+                              >
+                                <div
+                                  class="rewardItem"
+                                  :class="`item-${
+                                    prize.prize_amount ? 'MONEY' : 'MERCHANDISE'
+                                  }`"
+                                >
                                   <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >APPLE I16 PRO 256G</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
+                                    <span>
+                                      <!-- {{
+                                        prize.prize_amount
+                                          ? `৳ ${prize.prize_amount}`
+                                          : prize.prize_name
+                                      }} -->
+                                      {{ prize.prize_name }}
+                                    </span>
+                                    <div v-if="false" class="prize_item">
                                       <img
+                                        v-if="prize.icon"
                                         class="icon"
-                                        src="https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674360.png"
-                                        alt=""
+                                        :src="prize.icon"
+                                        :alt="prize.prize_name"
                                       />
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-1">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 8</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-2">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 3,888</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-3">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 5,888</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-4">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 1,888</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-5">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 2,888</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-6">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 88</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-7">
-                                <div class="rewardItem item-MONEY">
-                                  <div class="prize_message">
-                                    <span class=""
-                                      ><font style="vertical-align: inherit"
-                                        ><font style="vertical-align: inherit"
-                                          >৳ 888</font
-                                        ></font
-                                      ></span
-                                    >
-                                    <div class="prize_item">
-                                      <span class="icon icon-MONEY"></span>
+                                      <span
+                                        v-else
+                                        class="icon icon-MONEY"
+                                      ></span>
                                     </div>
                                   </div>
                                 </div>
                               </li>
                             </ul>
                           </div>
-                          <span class="start_wheel"></span>
+                          <span
+                            class="start_wheel"
+                            @click="startSpin"
+                            :class="{ disabled: isSpinning }"
+                          ></span>
                         </div>
-                        <div class="claim-btn">
-                          <font style="vertical-align: inherit"
-                            ><font style="vertical-align: inherit"
-                              >Claim</font
-                            ></font
-                          >
+                        <div
+                          class="claim-btn"
+                          @click="startSpin"
+                          :class="{ disabled: isSpinning }"
+                        >
+                          {{ isSpinning ? "抽奖中..." : "开始抽奖" }}
                         </div>
                       </div>
-                      <!-- react-empty: 4135 -->
                     </div>
                   </div>
                 </div>
@@ -379,39 +202,27 @@
                         style="width: 75%; height: 0px"
                       ></div>
                     </div>
-                    <div class="bar-num">
-                      <!-- react-text: 4142 --><font
-                        style="vertical-align: inherit"
-                        ><font style="vertical-align: inherit"
-                          >75.00
-                        </font></font
-                      ><!-- /react-text --><!-- react-text: 4143 --><font
-                        style="vertical-align: inherit"
-                        ><font style="vertical-align: inherit">%</font></font
-                      ><!-- /react-text -->
-                    </div>
+                    <div class="bar-num">75.00 %</div>
                   </div>
                 </div>
               </div>
               <div class="ticket-rank-wrapper">
                 <div class="ticket-rank-wrap">
-                  <div
+                  <!-- <div
                     class="swiper-container swiper-container-initialized swiper-container-vertical"
-                    id="rank-swiper"
                   >
-                    <div
-                      class="swiper-wrapper"
-                      style="
-                        transition-duration: 300ms;
-                        transform: translate3d(0px, -386.953px, 0px);
-                      "
-                    ></div>
-                    <span
-                      class="swiper-notification"
-                      aria-live="assertive"
-                      aria-atomic="true"
-                    ></span>
-                  </div>
+                    <div class="swiper-wrapper">
+                      <div
+                        v-for="record in winningRecords"
+                        :key="record.user"
+                        class="swiper-slide"
+                      >
+                        <div class="winning-record">
+                          {{ record.user }} 获得了 ৳{{ record.amount }}
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -423,8 +234,92 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
+
+// 模拟API数据
+const mockPrizeList4 = [
+  {
+    prize_name: "測試文案Ａ",
+    prize_amount: 0,
+    prize_id: 1,
+    icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674360.png",
+  },
+  {
+    prize_name: "现金奖励Ａ",
+    prize_amount: 888,
+    prize_id: 2,
+    icon: null,
+  },
+  {
+    prize_name: "现金奖励Ｂ",
+    prize_amount: 188,
+    prize_id: 3,
+    icon: null,
+  },
+  {
+    prize_name: "现金奖励Ｃ",
+    prize_amount: 88,
+    prize_id: 4,
+    icon: null,
+  },
+];
+
+const mockPrizeList8 = [
+  ...mockPrizeList4,
+  {
+    prize_name: "測試文案Ｂ",
+    prize_amount: 3888,
+    prize_id: 5,
+    icon: null,
+  },
+  {
+    prize_name: "測試文案Ｃ",
+    prize_amount: 2888,
+    prize_id: 6,
+    icon: null,
+  },
+  {
+    prize_name: "測試文案Ｄ",
+    prize_amount: 1888,
+    prize_id: 7,
+    icon: null,
+  },
+  {
+    prize_name: "測試文案Ｅ",
+    prize_amount: 588,
+    prize_id: 8,
+    icon: null,
+  },
+];
+
+const mockPrizeList12 = [
+  ...mockPrizeList8,
+  {
+    prize_name: "測試文案Ｆ",
+    prize_amount: 0,
+    prize_id: 9,
+    icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674361.png",
+  },
+  {
+    prize_name: "測試文案Ｇ",
+    prize_amount: 8888,
+    prize_id: 10,
+    icon: null,
+  },
+  {
+    prize_name: "測試文案Ｈ",
+    prize_amount: 6888,
+    prize_id: 11,
+    icon: null,
+  },
+  {
+    prize_name: "測試文案Ｑ",
+    prize_amount: 4888,
+    prize_id: 12,
+    icon: null,
+  },
+];
 
 export default {
   name: "LuckyWheelModal",
@@ -434,9 +329,65 @@ export default {
       required: true,
     },
   },
+
   emits: ["update:modelValue"],
   setup() {
     const isSpinning = ref(false);
+    const currentRotation = ref(0);
+    const prizeList = ref([]);
+    const wheel = ref(null);
+
+    // 计算转盘类名
+    const wheelNumberClass = computed(() => {
+      const count = prizeList.value.length;
+      return `number_${count}`;
+    });
+
+    // 计算转盘当前旋转样式
+    const rotateStyle = computed(() => ({
+      transform: `rotate(${currentRotation.value}deg)`,
+    }));
+
+    // 获取每个奖品的角度
+    // const getPrizeAngle = (index) => {
+    //   const count = prizeList.value.length;
+    //   return (360 / count) * index;
+    // };
+
+    // 开始抽奖
+    const startSpin = async () => {
+      if (isSpinning.value) return;
+
+      isSpinning.value = true;
+      const winningIndex = Math.floor(Math.random() * prizeList.value.length);
+      const baseRotations = 5; // 基础旋转圈数
+
+      // 计算目标角度：
+      // 1. 获取每个奖品占据的角度
+      const anglePerPrize = 360 / prizeList.value.length;
+      // 2. 计算中奖位置需要旋转的角度（因为我们要让它停在正上方）
+      const targetDegree = 360 - winningIndex * anglePerPrize;
+      // 3. 计算总旋转角度（基础圈数 + 目标角度）
+      const totalRotation = baseRotations * 360 + targetDegree;
+
+      // 使用GSAP进行动画
+      gsap.to(currentRotation, {
+        value: totalRotation,
+        duration: 5, // 增加动画时间使旋转更流畅
+        ease: "power2.out",
+        onComplete: () => {
+          isSpinning.value = false;
+          // 重置旋转角度，保持在0-360之间
+          currentRotation.value = currentRotation.value % 360;
+
+          // 显示中奖信息
+          const prize = prizeList.value[winningIndex];
+          alert(`恭喜您获得: ${prize.prize_name}`);
+        },
+      });
+    };
+
+    // 倒计时相关
     const timeLeft = ref({
       days: 4,
       hours: 23,
@@ -444,64 +395,6 @@ export default {
       seconds: 31,
     });
 
-    const prizes = ref([
-      {
-        name: "APPLE I16 PRO",
-        icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674360.png",
-      },
-      { name: "৳ 8", icon: null },
-      { name: "৳ 3,888", icon: null },
-      { name: "৳ 5,888", icon: null },
-      { name: "৳ 1,888", icon: null },
-      { name: "৳ 2,888", icon: null },
-      { name: "৳ 88", icon: null },
-      { name: "৳ 888", icon: null },
-    ]);
-
-    const winningRecords = ref([
-      { user: "md******9", amount: "88.00" },
-      { user: "ar******0", amount: "888.00" },
-      { user: "md****r", amount: "88.00" },
-    ]);
-
-    const wheel = ref(null);
-    const wheelStyle = ref({
-      background: "radial-gradient(circle at center, #FFD700, #FFA500)",
-      border: "8px solid #FFD700",
-      boxShadow: "0 0 20px rgba(255, 215, 0, 0.5)",
-    });
-
-    const getSliceStyle = (index) => {
-      const rotate = (360 / prizes.value.length) * index;
-      const backgroundColor = index % 2 === 0 ? "#FFFFFF" : "#FFF5E6";
-      return {
-        transform: `rotate(${rotate}deg)`,
-        backgroundColor,
-      };
-    };
-
-    const startSpin = async () => {
-      if (isSpinning.value) return;
-
-      isSpinning.value = true;
-      const winningIndex = Math.floor(Math.random() * prizes.value.length);
-
-      const baseRotations = 5;
-      const targetDegree = 360 - (360 / prizes.value.length) * winningIndex;
-      const totalRotation = baseRotations * 360 + targetDegree;
-
-      gsap.to(wheel.value, {
-        rotation: totalRotation,
-        duration: 3,
-        ease: "power2.out",
-        onComplete: () => {
-          isSpinning.value = false;
-        },
-      });
-    };
-
-    // 倒计时逻辑
-    let timer = null;
     const updateTimer = () => {
       if (timeLeft.value.seconds > 0) {
         timeLeft.value.seconds--;
@@ -526,7 +419,10 @@ export default {
       }
     };
 
-    onMounted(() => {
+    let timer = null;
+
+    onMounted(async () => {
+      prizeList.value = mockPrizeList12;
       timer = setInterval(updateTimer, 1000);
     });
 
@@ -537,11 +433,10 @@ export default {
     return {
       isSpinning,
       timeLeft,
-      prizes,
-      winningRecords,
+      prizeList,
       wheel,
-      wheelStyle,
-      getSliceStyle,
+      wheelNumberClass,
+      rotateStyle,
       startSpin,
     };
   },
@@ -2571,21 +2466,6 @@ export default {
   border-radius: 0.3rem;
 }
 
-.prize_wheel_root .wheel_bg .wheel_content ul {
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  content: "";
-  position: relative;
-  background-image: url(../assets/wheel.png);
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
 .prize_wheel_root .wheel_bg .wheel_content {
   border-radius: 50%;
   width: 69%;
@@ -2597,11 +2477,197 @@ export default {
   align-items: center;
   top: 1.1rem;
   left: 1.05rem;
-}
 
-.prize_wheel_root .wheel_bg .wheel_content.number_0 ul {
-  transition: all 2s linear;
-  will-change: transform;
+  ul {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    content: "";
+    position: relative;
+    background-image: url(../assets/wheel.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  &.number_4 ul {
+    background-image: url(../assets/wheel_4.png);
+  }
+
+  &.number_12 ul {
+    background-image: url(../assets/wheel_12.png);
+  }
+
+  // 通用的奖品项样式
+  ul li {
+    text-align: center;
+    width: 88%;
+    height: 88%;
+    border-radius: 50%;
+    position: absolute;
+    content: "";
+    display: block;
+    justify-content: center;
+
+    .rewardItem {
+      display: flex;
+      flex-wrap: wrap;
+      height: 25%;
+      word-break: break-word;
+      white-space: break-spaces;
+      text-overflow: ellipsis;
+      justify-content: center;
+
+      .prize_message {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+        position: relative;
+
+        span {
+          height: 0.7rem;
+          color: #462f2f;
+          font-size: 0.24rem;
+          max-width: 1.4rem;
+          display: -webkit-box !important;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          white-space: normal;
+          overflow: hidden;
+          line-height: 1.5;
+        }
+
+        div.prize_item {
+          max-width: 0.5rem;
+          width: 100%;
+          height: 0.5rem;
+
+          .icon {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  // 4个奖品项的旋转角度（90度递增）
+  &.number_4 ul {
+    li.item-0 {
+      transform: rotate(0deg);
+    }
+    li.item-1 {
+      transform: rotate(90deg);
+    }
+    li.item-2 {
+      transform: rotate(180deg);
+    }
+    li.item-3 {
+      transform: rotate(270deg);
+    }
+
+    li .rewardItem .prize_message {
+      transform: rotate(90deg);
+      width: 2rem; // 由于只有4个项目，可以给更大的空间
+    }
+  }
+
+  // 8个奖品项的旋转角度（45度递增）
+  &.number_8 ul {
+    li.item-0 {
+      transform: rotate(0deg);
+    }
+    li.item-1 {
+      transform: rotate(45deg);
+    }
+    li.item-2 {
+      transform: rotate(90deg);
+    }
+    li.item-3 {
+      transform: rotate(135deg);
+    }
+    li.item-4 {
+      transform: rotate(180deg);
+    }
+    li.item-5 {
+      transform: rotate(225deg);
+    }
+    li.item-6 {
+      transform: rotate(270deg);
+    }
+    li.item-7 {
+      transform: rotate(315deg);
+    }
+
+    li .rewardItem .prize_message {
+      transform: rotate(90deg);
+      width: 1.25rem;
+    }
+  }
+
+  // 12个奖品项的旋转角度（30度递增）
+  &.number_12 ul {
+    li.item-0 {
+      transform: rotate(0deg);
+    }
+    li.item-1 {
+      transform: rotate(30deg);
+    }
+    li.item-2 {
+      transform: rotate(60deg);
+    }
+    li.item-3 {
+      transform: rotate(90deg);
+    }
+    li.item-4 {
+      transform: rotate(120deg);
+    }
+    li.item-5 {
+      transform: rotate(150deg);
+    }
+    li.item-6 {
+      transform: rotate(180deg);
+    }
+    li.item-7 {
+      transform: rotate(210deg);
+    }
+    li.item-8 {
+      transform: rotate(240deg);
+    }
+    li.item-9 {
+      transform: rotate(270deg);
+    }
+    li.item-10 {
+      transform: rotate(300deg);
+    }
+    li.item-11 {
+      transform: rotate(330deg);
+    }
+
+    li .rewardItem .prize_message {
+      transform: rotate(90deg);
+      width: 1rem; // 由于项目更多，需要适当减小宽度
+
+      span {
+        font-size: 0.2rem; // 适当减小字体大小
+        font-size: 0.18rem;
+        height: auto;
+      }
+    }
+  }
+
+  &.number_0 ul {
+    transition: all 2s linear;
+    will-change: transform;
+  }
 }
 
 @keyframes spinWheel {
@@ -2634,16 +2700,6 @@ export default {
   display: block;
   justify-content: center;
   transform: rotate(0deg);
-}
-
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-0 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
 }
 
 .prize_wheel_root
@@ -2737,16 +2793,6 @@ export default {
   transform: rotate(45deg);
 }
 
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-1 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
-}
-
 .prize_wheel_root
   .wheel_bg
   .wheel_content
@@ -2836,16 +2882,6 @@ export default {
   display: block;
   justify-content: center;
   transform: rotate(90deg);
-}
-
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-2 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
 }
 
 .prize_wheel_root
@@ -2939,16 +2975,6 @@ export default {
   transform: rotate(135deg);
 }
 
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-3 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
-}
-
 .prize_wheel_root
   .wheel_bg
   .wheel_content
@@ -3038,16 +3064,6 @@ export default {
   display: block;
   justify-content: center;
   transform: rotate(180deg);
-}
-
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-4 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
 }
 
 .prize_wheel_root
@@ -3141,16 +3157,6 @@ export default {
   transform: rotate(225deg);
 }
 
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-5 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
-}
-
 .prize_wheel_root
   .wheel_bg
   .wheel_content
@@ -3240,16 +3246,6 @@ export default {
   display: block;
   justify-content: center;
   transform: rotate(270deg);
-}
-
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-6 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
 }
 
 .prize_wheel_root
@@ -3343,16 +3339,6 @@ export default {
   transform: rotate(315deg);
 }
 
-.prize_wheel_root .wheel_bg .wheel_content ul li.item-7 .rewardItem {
-  display: flex;
-  flex-wrap: wrap;
-  height: 30%;
-  word-break: break-word;
-  white-space: break-spaces;
-  text-overflow: ellipsis;
-  justify-content: center;
-}
-
 .prize_wheel_root
   .wheel_bg
   .wheel_content
@@ -3430,5 +3416,61 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
   display: block;
+}
+
+// 添加新的样式
+.start_wheel {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.claim-btn {
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    background: #999;
+
+    &:hover {
+      transform: none;
+      filter: none;
+    }
+  }
+}
+
+// 添加转盘旋转动画
+@keyframes spinWheel {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wheel_content {
+  ul {
+    transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 }
 </style>
