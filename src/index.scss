@@ -1,0 +1,4 @@
+html {
+  --unit: 7.5;
+  font-size: calc(100vw / var(--unit, 7.5)) !important;
+}
