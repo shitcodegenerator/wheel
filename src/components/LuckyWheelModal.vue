@@ -270,70 +270,142 @@ export default {
   left: 0;
   z-index: 100013;
   color: #fff;
+}
 
-  &:before {
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    background: rgba(0, 0, 0, 0.8);
-  }
+.ticket-popup-wrap:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.8);
+}
 
-  .ticket-content-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.ticket-popup-wrap .arrow-btn {
+  position: absolute;
+  top: 0.52rem;
+  left: 0.42rem;
+  z-index: 1;
+}
 
-    .header-wrap {
-      position: relative;
-      padding-top: 1.12rem;
-      display: flex;
-      justify-content: center;
-      background: url(../assets/header-title-top.png) no-repeat top/4.06rem
-        1.12rem;
-      z-index: -1;
+.ticket-popup-wrap .arrow-btn svg {
+  width: 0.56rem;
+  height: 0.56rem;
+}
 
-      .header-title {
-        min-width: 2.46rem;
-        height: 0.65rem;
-        font-size: 0.36rem;
-        position: relative;
-        line-height: 0.58rem;
-        color: #fff;
-        text-shadow: 1px 1px #c63036, -1px 1px #c63036, 1px -1px #c63036,
-          -1px -1px #c63036;
-        text-align: center;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABBCAYAAAAQTc7lAAAALklEQVQYlWP472H8n4nBzoeBiYGBAUZcO8PAxHDvOorYMCX4ZBiYGBjZPzBQAABIhAfla0dJfAAAAABJRU5ErkJggg==)
-          repeat-x left 0 / contain;
-        margin-top: -0.25rem;
-        padding: 0 0.1rem;
+.ticket-popup-wrap .ticket-content-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-        &:before {
-          position: absolute;
-          content: "";
-          width: 0.8rem;
-          height: 0.65rem;
-          left: -0.7rem;
-          background: url(../assets/header-title-left.png) no-repeat 50% /
-            contain;
-        }
+.ticket-popup-wrap .ticket-content-wrapper .header-wrap {
+  position: relative;
+  padding-top: 1.12rem;
+  display: flex;
+  justify-content: center;
+  background: url(../assets/header-title-top.png) no-repeat top/4.06rem 1.12rem;
+  z-index: -1;
+}
 
-        &:after {
-          position: absolute;
-          content: "";
-          width: 0.8rem;
-          height: 0.65rem;
-          right: -0.7rem;
-          background: url(../assets/header-title-right.png) no-repeat 50% /
-            contain;
-        }
-      }
-    }
-  }
+.ticket-popup-wrap .ticket-content-wrapper .header-wrap .header-title {
+  min-width: 2.46rem;
+  height: 0.65rem;
+  font-size: 0.36rem;
+  position: relative;
+  line-height: 0.58rem;
+  color: #fff;
+  text-shadow: 1px 1px #c63036, -1px 1px #c63036, 1px -1px #c63036,
+    -1px -1px #c63036;
+  text-align: center;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABBCAYAAAAQTc7lAAAALklEQVQYlWP472H8n4nBzoeBiYGBAUZcO8PAxHDvOorYMCX4ZBiYGBjZPzBQAABIhAfla0dJfAAAAABJRU5ErkJggg==)
+    repeat-x left 0 / contain;
+  margin-top: -0.25rem;
+  padding: 0 0.1rem;
+}
+
+.ticket-popup-wrap .ticket-content-wrapper .header-wrap .header-title:before {
+  position: absolute;
+  content: "";
+  width: 0.8rem;
+  height: 0.65rem;
+  left: -0.7rem;
+  background: url(../assets/header-title-left.png) no-repeat 50% / contain;
+}
+
+.ticket-popup-wrap .ticket-content-wrapper .header-wrap .header-title:after {
+  position: absolute;
+  content: "";
+  width: 0.8rem;
+  height: 0.65rem;
+  right: -0.7rem;
+  background: url(../assets/header-title-right.png) no-repeat 50% / contain;
+}
+
+.ticket-popup-wrap .ticket-content-wrapper .ticket-popup {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  overflow: hidden;
+}
+
+.ticket-popup-wrap .ticket-content-wrapper .ticket-popup-list {
+  width: 100%;
+  margin: 0.4rem 0;
+  padding-top: 0.18rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.22rem;
+  flex: 1 1 0%;
+  overflow-y: auto;
+}
+
+.ticket-popup-wrap .progress-bar-wrapper {
+  color: #fff;
+  text-align: center;
+  margin-top: 0.22rem;
+  width: 100%;
+  padding: 0 0.85rem;
+}
+
+.ticket-popup-wrap .progress-bar-wrapper .progress-bar {
+  width: 100%;
+  position: relative;
+}
+
+.ticket-popup-wrap .progress-bar-wrapper .progress-bar .am-progress-outer {
+  background: #262626 0 0 no-repeat padding-box;
+  border: 0.03rem solid #707070;
+  border-radius: 0.23rem;
+  height: 0.36rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.12rem;
+}
+
+.ticket-popup-wrap .progress-bar-wrapper .progress-bar .am-progress-bar {
+  background: transparent linear-gradient(180deg, #ffcf00, #ee7c0e) 0 0
+    no-repeat padding-box;
+  border-radius: 0.21rem;
+  height: 0.2rem !important;
+  border: 0;
+  animation: progressAnimationStrike 2s;
+}
+
+.ticket-popup-wrap .progress-bar-wrapper .progress-bar .bar-num {
+  position: absolute;
+  font-size: 0.24rem;
+  line-height: 0.42rem;
+  right: 0.3rem;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
 }
 
 .ticket-popup-wrapper {
@@ -343,319 +415,41 @@ export default {
   align-items: center;
   flex: 1 1 0%;
   overflow: hidden;
-
-  .banner-wrap {
-    position: relative;
-    width: 100%;
-    height: 1rem;
-    display: flex;
-    align-items: center;
-
-    .swiper-slide {
-      width: 1.35rem;
-      height: 0.68rem;
-      border-radius: 0.14rem;
-      padding: 0 0.15rem;
-      background: url(../assets/ticket-default.png) no-repeat 50% / cover;
-      font-size: 0.15rem;
-      color: #fff;
-      word-break: break-word;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: auto;
-
-      .item-name {
-        width: 100%;
-        display: block;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        line-height: 1.5;
-        text-align: center;
-      }
-    }
-  }
-
-  .content-wrapper {
-    flex: 1 1 0%;
-    overflow-y: auto;
-    width: 100%;
-    padding: 0 0 0.2rem;
-  }
 }
 
-.ticket-game-wrap {
-  width: 100%;
-
-  .prize-wheel-wrapper {
-    width: 100%;
-    display: inline-block;
-    text-align: center;
-
-    .wheel_container {
-      position: relative;
-      height: auto;
-    }
-  }
-}
-
-.prize_wheel_root {
+.ticket-popup-wrapper .banner-wrap {
   position: relative;
-  width: inherit;
-  height: inherit;
-
-  .wheel_bg {
-    background: url(../assets/ticket-type-wheel.png) no-repeat 50% / contain;
-    position: relative;
-    width: 6.9rem;
-    height: 6.45rem;
-    margin: 0 auto;
-
-    &:before {
-      position: absolute;
-      content: "";
-      top: 0;
-      left: 0;
-      width: 6.9rem;
-      height: 6.45rem;
-      background: url(../assets/ticket-type-wheel-bg.png) no-repeat 50% /
-        contain;
-      z-index: -1;
-    }
-
-    &:after {
-      position: absolute;
-      content: "";
-      top: 0;
-      left: 0;
-      width: 6.9rem;
-      height: 6.45rem;
-      background: url(../assets/ticket-type-wheel-bg2.png) no-repeat 50% /
-        contain;
-      z-index: -1;
-      animation: pointShow 2s infinite linear;
-    }
-
-    .start_wheel {
-      content: "";
-      position: absolute;
-      background-image: url(../assets/goBtn.png);
-      background-position: 50%;
-      background-repeat: no-repeat;
-      background-size: contain;
-      z-index: 100;
-      left: 50%;
-      top: 50%;
-      width: 0.9rem;
-      height: 1.22rem;
-      transform: translate(-50%, -50%);
-      margin-top: -10px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-
-      &.disabled {
-        cursor: not-allowed;
-        opacity: 0.7;
-      }
-    }
-
-    .wheel_content {
-      border-radius: 50%;
-      width: 69%;
-      position: relative;
-      content: "";
-      height: 63%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      top: 1.1rem;
-      left: 1.05rem;
-
-      ul {
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        content: "";
-        position: relative;
-        background-image: url(../assets/wheel.png);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: contain;
-        will-change: transform;
-        transform-origin: center center;
-      }
-
-      &.number_4 {
-        ul {
-          background-image: url(../assets/wheel_4.png);
-        }
-      }
-
-      &.number_12 {
-        ul {
-          background-image: url(../assets/wheel_12.png);
-        }
-      }
-
-      // 奖品项基础样式
-      ul li {
-        text-align: center;
-        width: 88%;
-        height: 88%;
-        border-radius: 50%;
-        position: absolute;
-        content: "";
-        display: block;
-        justify-content: center;
-
-        .rewardItem {
-          display: flex;
-          flex-wrap: wrap;
-          height: 25%;
-          word-break: break-word;
-          white-space: break-spaces;
-          text-overflow: ellipsis;
-          justify-content: center;
-
-          .prize_message {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100%;
-            position: relative;
-            transform: rotate(90deg);
-
-            span {
-              color: #462f2f;
-              font-size: 0.24rem;
-              max-width: 1.4rem;
-              display: -webkit-box !important;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-              white-space: normal;
-              overflow: hidden;
-              line-height: 1.5;
-            }
-
-            .prize_item {
-              max-width: 0.5rem;
-              width: 100%;
-              height: 0.5rem;
-              order: -1;
-
-              .icon {
-                width: 100%;
-                height: 100%;
-                background-size: contain;
-                background-repeat: no-repeat;
-                display: block;
-
-                &.icon-MONEY {
-                  background-image: url(../assets/money.png);
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // 4个奖品的旋转角度
-      &.number_4 ul {
-        li {
-          @for $i from 0 through 3 {
-            &.item-#{$i} {
-              transform: rotate(#{$i * 90}deg);
-            }
-          }
-
-          .rewardItem .prize_message {
-            width: 2rem;
-          }
-        }
-      }
-
-      // 8个奖品的旋转角度
-      &.number_8 ul {
-        li {
-          @for $i from 0 through 7 {
-            &.item-#{$i} {
-              transform: rotate(#{$i * 45}deg);
-            }
-          }
-
-          .rewardItem .prize_message {
-            width: 1.25rem;
-          }
-        }
-      }
-
-      // 12个奖品的旋转角度
-      &.number_12 ul {
-        li {
-          @for $i from 0 through 11 {
-            &.item-#{$i} {
-              transform: rotate(#{$i * 30}deg);
-            }
-          }
-
-          .rewardItem .prize_message {
-            width: 1rem;
-
-            span {
-              font-size: 0.18rem;
-              height: auto;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .claim-btn {
-    min-width: 3.52rem;
-    margin-top: -0.2rem;
-    font-size: 0.28rem;
-    color: #d63000;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent linear-gradient(180deg, #fff, #f7c163 50%, #f2b03e)
-      0 0 no-repeat padding-box;
-    height: 0.56rem;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-      filter: brightness(1.1);
-    }
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: 0.7;
-      background: #999;
-
-      &:hover {
-        transform: none;
-        filter: none;
-      }
-    }
-  }
+  width: 100%;
+  height: 1rem;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes pointShow {
-  0% {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.8;
-  }
+.ticket-popup-wrapper .banner-wrap .swiper-container {
+  width: calc(100% - 2.68rem);
+  display: flex;
+  align-items: center;
+  z-index: 0;
+}
+
+.ticket-popup-wrapper .banner-wrap .swiper-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.swiper-slide {
+  width: 1.35rem;
+  height: 0.68rem;
+  border-radius: 0.14rem;
+  padding: 0 0.15rem;
+  background: url(../assets/ticket-default.png) no-repeat 50% / cover;
+  font-size: 0.15rem;
+  color: #fff;
+  word-break: break-word;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
 .ticket-popup-wrapper .banner-wrap .swiper-slide.has-img {
@@ -671,6 +465,16 @@ export default {
 .ticket-popup-wrapper .banner-wrap .swiper-slide.swiper-slide-active img {
   width: 1.8rem;
   height: 1rem;
+}
+
+.ticket-popup-wrapper .banner-wrap .swiper-slide .item-name {
+  width: 100%;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.5;
+  text-align: center;
 }
 
 @supports (-webkit-line-clamp: 2) {
@@ -1587,6 +1391,8 @@ export default {
   height: 6.45rem;
   background: url(../assets/ticket-type-wheel-bg.png) no-repeat 50% / contain;
   z-index: -1;
+  // 移除这个动画，它可能会干扰主要的旋转效果
+  // animation: spinWheel 5s infinite linear;
 }
 
 .ticket-game-wrap .prize-wheel-wrapper .prize_wheel_root .wheel_bg:after {
