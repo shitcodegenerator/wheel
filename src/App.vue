@@ -1,17 +1,15 @@
 <template>
-  <div
-    id="app"
-    class="min-h-screen bg-gray-100 flex items-center justify-center"
-  >
-    <!-- 主页面内容 -->
-    <div class="relative">
-      <button @click="showGameModal = true">
-        <img src="./assets/prize_wheel.gif" alt="wheel" />
-      </button>
-    </div>
+  <div id="app">
+    <button class="float-btn" @click="showGameModal = true">
+      <img src="./assets/prize_wheel.gif" alt="wheel" />
+    </button>
 
     <!-- 游戏弹窗 -->
-    <LuckyWheelModal :value="showGameModal" />
+    <LuckyWheelModal
+      v-show="showGameModal"
+      :value="showGameModal"
+      @close="showGameModal = false"
+    />
   </div>
 </template>
 
@@ -25,7 +23,7 @@ export default {
   },
   data() {
     return {
-      showGameModal: true,
+      showGameModal: false,
       winningPrize: {
         prize_id: 1,
         prize_name: "測試文案Ａ",
@@ -39,14 +37,24 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 @import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #3b3b3b;
+  height: 100vh;
+  position: relative;
+}
+
+.float-btn {
+  position: fixed;
+  bottom: 50%;
+  right: 20px;
+  img {
+    height: 100px;
+  }
 }
 </style>

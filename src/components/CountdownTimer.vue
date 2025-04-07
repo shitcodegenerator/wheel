@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div class="title-wrap">幸运大转盘</div>
+    <div class="title-wrap">
+      幸运大转盘
+    </div>
     <div class="ticket-time">
       <div class="time-top">
         <!-- <TimeTick /> -->
-        <div class="title-text">剩余时间</div>
+        <div class="title-text">
+          剩余时间
+        </div>
       </div>
       <div class="time-bottom">
         <div class="days">
@@ -12,25 +16,33 @@
             <div class="num">
               {{ timeLeft.days }}
             </div>
-            <div class="title">天</div>
+            <div class="title">
+              天
+            </div>
           </div>
           <div class="time-item">
             <div class="num">
               {{ timeLeft.hours }}
             </div>
-            <div class="title">时</div>
+            <div class="title">
+              时
+            </div>
           </div>
           <div class="time-item">
             <div class="num">
               {{ timeLeft.minutes }}
             </div>
-            <div class="title">分</div>
+            <div class="title">
+              分
+            </div>
           </div>
           <div class="time-item">
             <div class="num">
               {{ timeLeft.seconds }}
             </div>
-            <div class="title">秒</div>
+            <div class="title">
+              秒
+            </div>
           </div>
         </div>
       </div>

@@ -9,9 +9,14 @@
         aria-valuemin="0"
         aria-valuemax="100"
       >
-        <div class="am-progress-bar" :style="{ width: `${progress}%` }"></div>
+        <div
+          class="am-progress-bar"
+          :style="{ width: `${progress}%` }"
+        />
       </div>
-      <div class="bar-num">{{ progress.toFixed(2) }} %</div>
+      <div class="bar-num">
+        {{ progress.toFixed(2) }} %
+      </div>
     </div>
   </div>
 </template>
