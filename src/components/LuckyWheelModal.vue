@@ -8,13 +8,10 @@
         </div>
         <div class="ticket-popup">
           <div class="ticket-popup-wrapper">
-            <div class="banner-wrap">
-              <div class="swiper-slide">
-                <div class="item-name">幸运大转盘抽奖</div>
-              </div>
-            </div>
+            <div class="item-name">幸运大转盘抽奖</div>
             <div class="content-wrapper">
               <CountdownTimer :timeLeft="timeLeft" />
+
               <div>
                 <div class="ticket-game-wrap">
                   <div class="prize-wheel-wrapper">
@@ -76,44 +73,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="current-progress-wrapper">
-                <div class="progress-bar-wrapper">
-                  <div class="progress-bar">
-                    <div
-                      class="am-progress-outer"
-                      role="progressbar"
-                      aria-valuenow="75"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      <div
-                        class="am-progress-bar"
-                        style="width: 75%; height: 0px"
-                      ></div>
-                    </div>
-                    <div class="bar-num">75.00 %</div>
-                  </div>
-                </div>
-              </div>
-              <div class="ticket-rank-wrapper">
-                <div class="ticket-rank-wrap">
-                  <!-- <div
-                    class="swiper-container swiper-container-initialized swiper-container-vertical"
-                  >
-                    <div class="swiper-wrapper">
-                      <div
-                        v-for="record in winningRecords"
-                        :key="record.user"
-                        class="swiper-slide"
-                      >
-                        <div class="winning-record">
-                          {{ record.user }} 获得了 ৳{{ record.amount }}
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
-                </div>
+                <ProgressBar :progress="75" />
               </div>
             </div>
           </div>
@@ -134,14 +94,16 @@ import gsap from "gsap";
 import { getPrizeList, getWinnerPrize } from "../api/prizeList";
 import CloseBtn from "./CloseBtn.vue";
 import CountdownTimer from "./CountdownTimer.vue";
-import WinningPopup from "./WinningPopup.vue"; // 引入中奖弹窗组件
+import WinningPopup from "./WinningPopup.vue";
+import ProgressBar from "./ProgressBar.vue";
 
 export default {
   name: "LuckyWheelModal",
   components: {
     CloseBtn,
     CountdownTimer,
-    WinningPopup, // 注册中奖弹窗组件
+    WinningPopup,
+    ProgressBar,
   },
   props: {
     value: {
@@ -364,50 +326,6 @@ export default {
   overflow-y: auto;
 }
 
-.ticket-popup-wrap .progress-bar-wrapper {
-  color: #fff;
-  text-align: center;
-  margin-top: 0.22rem;
-  width: 100%;
-  padding: 0 0.85rem;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar {
-  width: 100%;
-  position: relative;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar .am-progress-outer {
-  background: #262626 0 0 no-repeat padding-box;
-  border: 0.03rem solid #707070;
-  border-radius: 0.23rem;
-  height: 0.36rem;
-  display: flex;
-  align-items: center;
-  padding: 0 0.12rem;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar .am-progress-bar {
-  background: transparent linear-gradient(180deg, #ffcf00, #ee7c0e) 0 0
-    no-repeat padding-box;
-  border-radius: 0.21rem;
-  height: 0.2rem !important;
-  border: 0;
-  animation: progressAnimationStrike 2s;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar .bar-num {
-  position: absolute;
-  font-size: 0.24rem;
-  line-height: 0.42rem;
-  right: 0.3rem;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  display: flex;
-  align-items: center;
-}
-
 .ticket-popup-wrapper {
   margin-top: 0.08rem;
   display: flex;
@@ -437,9 +355,8 @@ export default {
   align-items: center;
 }
 
-.swiper-slide {
-  width: 1.35rem;
-  height: 0.68rem;
+.item-name {
+  width: 50vw;
   border-radius: 0.14rem;
   padding: 0 0.15rem;
   background: url(../assets/ticket-default.png) no-repeat 50% / cover;
@@ -452,92 +369,11 @@ export default {
   margin: auto;
 }
 
-.ticket-popup-wrapper .banner-wrap .swiper-slide.has-img {
-  padding: 0;
-}
-
-.ticket-popup-wrapper .banner-wrap .swiper-slide.swiper-slide-active {
-  width: 1.8rem;
-  height: 1rem;
-  font-size: 0.2rem;
-}
-
-.ticket-popup-wrapper .banner-wrap .swiper-slide.swiper-slide-active img {
-  width: 1.8rem;
-  height: 1rem;
-}
-
-.ticket-popup-wrapper .banner-wrap .swiper-slide .item-name {
-  width: 100%;
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  line-height: 1.5;
-  text-align: center;
-}
-
-@supports (-webkit-line-clamp: 2) {
-  .ticket-popup-wrapper .banner-wrap .swiper-slide .item-name {
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-  }
-}
-
-.ticket-popup-wrapper .banner-wrap .swiper-slide img {
-  width: 1.35rem;
-  height: 0.68rem;
-  object-fit: cover;
-  border-radius: 0.14rem;
-}
-
-.ticket-popup-wrapper .banner-wrap .swiper-btn {
-  width: 0.32rem;
-  height: 0.4rem;
-  position: absolute;
-}
-
-// .ticket-popup-wrapper .banner-wrap .swiper-btn-prew {
-//   background: url(../assets/ticket-arrow.png) no-repeat 50% / contain;
-//   left: 0.9rem;
-//   transform: rotate(180deg);
-// }
-
-// .ticket-popup-wrapper .banner-wrap .swiper-btn-next {
-//   background: url(../assets/ticket-arrow.png) no-repeat 50% / contain;
-//   right: 0.9rem;
-// }
-
 .ticket-popup-wrapper .content-wrapper {
   flex: 1 1 0%;
   overflow-y: auto;
   width: 100%;
   padding: 0 0 0.2rem;
-}
-
-.ticket-condition-wrap {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-}
-
-.ticket-condition-wrap .info-text {
-  font-size: 0.24rem;
-  color: 0.24rem;
-  margin-top: 0.3rem;
-  text-align: center;
-}
-
-@keyframes progressAnimationStrike {
-  0% {
-    width: 0;
-  }
-
-  to {
-    width: attr(aria-valuenow);
-  }
 }
 
 .ticket-condition-wrap {
@@ -758,556 +594,6 @@ export default {
   height: 0.3rem;
 }
 
-.ticket-share-wrapper {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  z-index: 100030;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ticket-share-wrapper.popList {
-  position: fixed;
-  left: 0;
-}
-
-.ticket-share-wrapper:before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  left: 0;
-  top: 0;
-  z-index: 100011;
-}
-
-.ticket-share-wrapper .share-wrap {
-  position: relative;
-  z-index: 100030;
-  width: 5.8rem;
-  background: #000 0 0 no-repeat padding-box;
-  border: 0.03rem solid #8d8d8d;
-  border-radius: 0.32rem;
-  padding: 0.45rem 0.32rem 0.32rem;
-  max-height: 90vh;
-  max-height: calc(var(--vh, 1vh) * 90);
-  overflow-y: auto;
-}
-
-.ticket-share-wrapper .share-title {
-  font-size: 0.32rem;
-  color: #efefef;
-  text-align: center;
-  padding: 0 0.77rem;
-}
-
-.ticket-share-wrapper .share-message {
-  margin-top: 0.31rem;
-  background: #4b4b4b 0 0 no-repeat padding-box;
-  border-radius: 0.21rem;
-  padding: 0.29rem 0.5rem 0.13rem;
-  font-size: 0.24rem;
-  color: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.ticket-share-wrapper .share-message .share-item {
-  margin-bottom: 0.12rem;
-  width: 49%;
-}
-
-.ticket-share-wrapper .share-btn {
-  width: 100%;
-  height: 0.8rem;
-  border-radius: 0.16rem;
-  box-shadow: 0 0.03rem 0.06rem #00000029;
-  font-size: 0.24rem;
-  font-weight: 700;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.2rem;
-}
-
-.ticket-share-wrapper .share-btn svg {
-  width: 0.46rem;
-  height: 0.46rem;
-  fill: #fff;
-  margin-right: 0.24rem;
-}
-
-.ticket-share-wrapper .whatsapp-btn {
-  margin-top: 0.3rem;
-  background: transparent linear-gradient(178deg, #22d462, #29ce64 30%, #038937)
-    0 0 no-repeat padding-box;
-}
-
-.ticket-share-wrapper .sms-btn {
-  background: transparent linear-gradient(178deg, #62e1ff, #1fb1f2 30%, #0085b5)
-    0 0 no-repeat padding-box;
-}
-
-.ticket-share-wrapper .facebook-btn {
-  background: linear-gradient(180deg, #4496e3, #3581d0 30%, #1565c0);
-}
-
-.ticket-share-wrapper .telegram-btn {
-  background: linear-gradient(180deg, #71d1ff, #039be5 30%, #0071a8);
-}
-
-.ticket-share-wrapper .twitter-btn {
-  background: linear-gradient(180deg, #afafaf, #6a6a6a 30%, #3d3d3d);
-}
-
-.ticket-share-wrapper .desc-content {
-  margin-top: 0.3rem;
-  color: #ffb30b;
-  font-size: 0.24rem;
-  text-align: center;
-}
-
-.ticket-share-wrapper .share-modal-wrapper {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100032;
-}
-
-.ticket-share-wrapper .share-modal-wrapper:before {
-  position: absolute;
-  content: "";
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 100031;
-}
-
-.ticket-share-wrapper .share-modal-wrapper .share-modal-content {
-  position: relative;
-  z-index: 100032;
-  background: #fff;
-  text-align: center;
-  height: 100%;
-  width: 5.8rem;
-  border-radius: 0.14rem;
-  padding-top: 0.3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.ticket-share-wrapper .share-modal-wrapper .share-modal-content .modal-title {
-  font-size: 0.36rem;
-  color: #000;
-}
-
-.ticket-share-wrapper .share-modal-wrapper .share-modal-content .modal-content {
-  font-size: 0.3rem;
-  color: #888;
-  padding: 0 0.3rem;
-}
-
-.ticket-share-wrapper .share-modal-wrapper .share-modal-content .modal-btn {
-  display: flex;
-  border-top: 1px solid #ddd;
-  width: 100%;
-  font-weight: 700;
-  font-size: 0.28rem;
-  height: 1rem;
-}
-
-.ticket-share-wrapper
-  .share-modal-wrapper
-  .share-modal-content
-  .modal-btn
-  .cancel-btn {
-  flex: 1 1 0%;
-  width: 50%;
-  color: #000;
-  border-right: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ticket-share-wrapper
-  .share-modal-wrapper
-  .share-modal-content
-  .modal-btn
-  .go-btn {
-  flex: 1 1 0%;
-  color: #108ee9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ticket-list-item {
-  width: 77%;
-  border-radius: 0.13rem;
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-}
-
-.ticket-list-item.light .item-tag {
-  background: #c60d0d 0 0 no-repeat padding-box;
-}
-
-.ticket-list-item.dark .item-tag {
-  background: #1d336f 0 0 no-repeat padding-box;
-}
-
-.ticket-list-item.img-bg {
-  background: none;
-  position: relative;
-}
-
-.ticket-list-item.img-bg .item-top-wrap {
-  background: none;
-}
-
-.ticket-list-item .img-bg-wrap {
-  border-radius: 0.13rem;
-  top: 0;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.ticket-list-item .img-bg-wrap img {
-  width: 100%;
-  object-fit: cover;
-}
-
-.ticket-list-item .item-top-wrap {
-  min-height: 1.34rem;
-  width: 100%;
-  padding-right: 0.5rem;
-  border-radius: 0.13rem 0.13rem 0 0;
-}
-
-.ticket-list-item .item-top-wrap.one-row {
-  border-radius: 0.13rem;
-}
-
-.ticket-list-item .item-top-wrap .item-tag-wrap {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  font-size: 0.22rem;
-}
-
-.ticket-list-item .item-top-wrap .item-tag {
-  position: relative;
-  min-width: 1.8rem;
-  height: 0.45rem;
-  border-radius: 0.13rem 0 0.4rem 0;
-  display: flex;
-  align-items: center;
-}
-
-.ticket-list-item .item-top-wrap .item-tag:before {
-  content: "";
-  width: 0.8rem;
-  height: 0.8rem;
-  display: block;
-  margin: -0.175rem 0 0 -0.24rem;
-}
-
-.ticket-list-item .item-top-wrap .item-count .days {
-  display: flex;
-  align-items: center;
-  font-size: 0.22rem;
-}
-
-.ticket-list-item .item-top-wrap .item-count .days .num {
-  position: relative;
-}
-
-.ticket-list-item .item-top-wrap .item-count .days .num:not(:last-child):after {
-  content: ":";
-  margin: 0 0.05rem;
-}
-
-.ticket-list-item .item-top-content {
-  display: flex;
-  align-items: center;
-  margin: 0.11rem 0 0.22rem;
-}
-
-.ticket-list-item .item-top-content .item-name {
-  flex: 1 1 0%;
-  font-size: 0.3rem;
-  font-weight: 700;
-  padding-left: 0.4rem;
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  line-height: 1.5;
-}
-
-@supports (-webkit-line-clamp: 2) {
-  .ticket-list-item .item-top-content .item-name {
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-  }
-}
-
-.ticket-list-item .item-top-content .item-claim {
-  background: transparent linear-gradient(180deg, #ff5800, #ff3b00 30%, #e30000)
-    0 0 no-repeat padding-box;
-  box-shadow: 0 0.03rem 0.06rem #00000029;
-  border-radius: 0.25rem;
-  min-height: 0.5rem;
-  width: 1.68rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  font-size: 0.24rem;
-  padding: 0 0.15rem;
-  text-align: center;
-}
-
-.ticket-list-item .item-top-content .item-claim.disabled {
-  background: transparent linear-gradient(180deg, #818181, #716f6f 30%, #464444)
-    0 0 no-repeat padding-box;
-  color: #b2b2b2;
-}
-
-.ticket-list-item .item-bottom-wrap {
-  width: 100%;
-  background: #fff;
-  border-radius: 0 0 0.13rem 0.13rem;
-  min-height: 0.53rem;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.ticket-list-item .item-bottom-wrap:before {
-  position: absolute;
-  top: 0.19rem;
-  right: 0.4rem;
-  content: "";
-  width: 0.26rem;
-  height: 0.16rem;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAQBAMAAAD6/3KbAAAAJ1BMVEUAAABfX19gYGBeXl5fX19eXl5eXl5dXV1gYGBgYGBeXl5gYGBfX19vXCzzAAAADHRSTlMA8DCgn4DgYEAgbxBXTiavAAAAZUlEQVQI10XJrQ2AUAxF4RsIAgn6CWAOBIMwAiMgGIERGAP7En5Mh+KmpelxJx+0qjkQjXLFlCIyBfGIQcSgxtAoD4no1KInOnUoDI2g6IQfZyXDG0nJMPNIhrz1IRkuL+oN3rl/z0g2MqBkCMkAAAAASUVORK5CYII=)
-    no-repeat 50% / contain;
-  transform: rotate(180deg);
-}
-
-.ticket-list-item .item-bottom-wrap.on:before {
-  transform: rotate(0deg);
-}
-
-.ticket-list-item .item-bottom-wrap .bottom-header {
-  position: relative;
-  flex: 1 1 0%;
-  display: flex;
-  align-items: center;
-  font-size: 0.24rem;
-  color: #5f5f5f;
-  padding: 0 0.76rem 0 0.4rem;
-}
-
-.ticket-list-item .condition-wrapper {
-  position: relative;
-  z-index: 1;
-}
-
-.ticket-list-item .condition-wrapper .arrow-wrapper {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.ticket-list-item .condition-wrapper .ticket-condition-wrap {
-  overflow-y: unset;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list {
-  height: -webkit-max-content;
-  height: max-content;
-  max-height: -webkit-max-content;
-  max-height: max-content;
-  margin-top: 0.4rem;
-  gap: initial;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item {
-  background: transparent;
-  color: #7c7c7c;
-  font-size: 0.24rem;
-  padding: 0.35rem 0;
-  margin: 0 auto;
-  width: 5.08rem;
-  border-radius: 0;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.15rem;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item:not(:last-child) {
-  border-bottom: 0.02rem solid #d3d3d3;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .item-top {
-  flex: 1 1 0%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .item-top
-  .condition-title {
-  flex: 1 1 0%;
-  display: flex;
-  align-items: center;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .item-top
-  .progress-bar-wrapper {
-  flex-direction: row;
-  gap: 0.05rem;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .item-top
-  .progress-bar-wrapper
-  .progress-bar {
-  flex: 1 1 0%;
-  width: -webkit-max-content;
-  width: max-content;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .item-top
-  .item-data {
-  flex: initial;
-  font-size: 0.18rem;
-  color: #404040;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .condition-button {
-  color: #fff;
-  position: relative;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .ticket-condition-list
-  .ticket-condition-item
-  .condition-button.done {
-  border: 0.02rem solid #ff7c1c;
-  background: transparent;
-  color: #ff7c1c;
-}
-
-// .ticket-list-item
-//   .condition-wrapper
-//   .ticket-condition-wrap
-//   .ticket-condition-list
-//   .ticket-condition-item
-//   .condition-button.done:before {
-//   position: absolute;
-//   content: "";
-//   left: -0.1rem;
-//   top: -0.17rem;
-//   width: 0.32rem;
-//   height: 0.32rem;
-//   background: url(../assets/reward-completed.fe345450.png) no-repeat 50% /
-//     contain;
-// }
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .progress-bar-wrapper {
-  margin-top: 0.1rem;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .progress-bar-wrapper
-  .progress-bar
-  .am-progress-outer {
-  background: #404040 0 0 no-repeat padding-box;
-  height: 0.12rem;
-  padding: 0;
-}
-
-.ticket-list-item
-  .condition-wrapper
-  .ticket-condition-wrap
-  .progress-bar-wrapper
-  .progress-bar
-  .am-progress-bar {
-  background: #fab00c 0 0 no-repeat padding-box;
-  border-radius: 0.23rem;
-  height: 0.12rem;
-}
-
 .icon-MONEY {
   background-image: url(../assets/money.png);
 }
@@ -1391,8 +677,6 @@ export default {
   height: 6.45rem;
   background: url(../assets/ticket-type-wheel-bg.png) no-repeat 50% / contain;
   z-index: -1;
-  // 移除这个动画，它可能会干扰主要的旋转效果
-  // animation: spinWheel 5s infinite linear;
 }
 
 .ticket-game-wrap .prize-wheel-wrapper .prize_wheel_root .wheel_bg:after {
@@ -2913,5 +2197,4 @@ export default {
     transition: none;
   }
 }
-// ... existing code ...
 </style>
