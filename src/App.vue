@@ -11,42 +11,39 @@
     </div>
 
     <!-- 游戏弹窗 -->
-    <LuckyWheelModal v-model="showGameModal" />
+    <LuckyWheelModal
+      :value="showGameModal"
+      :showWinningPopup="showWinningPopup"
+      :prize="winningPrize"
+    />
 
-    <!-- Winner Modal -->
-    <div
-      v-if="showWinnerModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60]"
-    >
-      <div class="bg-white p-8 rounded-lg shadow-xl text-center">
-        <h2 class="text-2xl font-bold mb-4">恭喜中獎！</h2>
-        <p class="text-xl mb-6">您獲得了：{{ winningPrize?.name }}</p>
-        <button
-          @click="showWinnerModal = false"
-          class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none"
-        >
-          關閉
-        </button>
-      </div>
-    </div>
+    <!-- 添加中奖弹窗 -->
+    <WinningPopup :value="showWinningPopup" :prize="winningPrize" />
   </div>
 </template>
 
 <script>
 import LuckyWheelModal from "./components/LuckyWheelModal.vue";
+import WinningPopup from "./components/WinningPopup.vue"; // 引入弹窗组件
 
 export default {
   name: "App",
   components: {
     LuckyWheelModal,
+    WinningPopup,
   },
   data() {
     return {
       prizes: [],
       isSpinning: false,
-      showWinnerModal: false,
       showGameModal: true,
-      winningPrize: null,
+      winningPrize: {
+        prize_id: 1,
+        prize_name: "測試文案Ａ",
+        prize_amount: 0,
+        icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674360.png",
+      },
+      showWinningPopup: false,
     };
   },
 

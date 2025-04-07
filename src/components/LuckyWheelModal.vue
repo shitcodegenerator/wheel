@@ -1,82 +1,7 @@
 <template>
-  <div v-if="modelValue" class="fixed inset-0 z-50 bg-black/80">
+  <div v-if="true" class="fixed inset-0 z-50 bg-black/80">
     <div class="ticket-popup-wrap">
-      <div class="close-btn" @click="$emit('update:modelValue', false)">
-        <svg class="am-icon am-icon-ticket-popup-close_7da51bf2 am-icon-md">
-          <symbol viewBox="0 0 56 56" id="ticket-popup-close_7da51bf2" class="">
-            <g
-              id="ticket-popup-close_7da51bf2_tickettask_btn_close_normal"
-              transform="translate(-652 -52)"
-              class=""
-            >
-              <g
-                id="ticket-popup-close_7da51bf2_Group_639"
-                data-name="Group 639"
-                transform="translate(610)"
-                class=""
-              >
-                <g
-                  id="ticket-popup-close_7da51bf2_Ellipse_21"
-                  data-name="Ellipse 21"
-                  transform="translate(42 52)"
-                  fill="none"
-                  stroke="#fff"
-                  stroke-width="4"
-                  class=""
-                >
-                  <circle
-                    cx="28"
-                    cy="28"
-                    r="28"
-                    stroke="none"
-                    class=""
-                  ></circle>
-                  <circle cx="28" cy="28" r="26" fill="none" class=""></circle>
-                </g>
-                <g
-                  id="ticket-popup-close_7da51bf2_Group_642"
-                  data-name="Group 642"
-                  transform="translate(-674.48 -54)"
-                  class=""
-                >
-                  <g
-                    id="ticket-popup-close_7da51bf2_Group_637"
-                    data-name="Group 637"
-                    transform="translate(731.51 121.069)"
-                    class=""
-                  >
-                    <rect
-                      id="ticket-popup-close_7da51bf2_Rectangle_280"
-                      data-name="Rectangle 280"
-                      width="4.585"
-                      height="32.098"
-                      rx="2.293"
-                      transform="translate(22.697 0) rotate(45)"
-                      fill="#fff"
-                      class=""
-                    ></rect>
-                    <rect
-                      id="ticket-popup-close_7da51bf2_Rectangle_281"
-                      data-name="Rectangle 281"
-                      width="4.585"
-                      height="32.098"
-                      rx="2.293"
-                      transform="translate(25.939 22.697) rotate(135)"
-                      fill="#fff"
-                      class=""
-                    ></rect>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </symbol>
-          <use
-            xlink:href="#ticket-popup-close_7da51bf2"
-            __h2d_shadowroot="2905"
-            class=""
-          ></use>
-        </svg>
-      </div>
+      <CloseBtn @click="$emit('update:modelValue', false)" />
       <div class="ticket-content-wrapper">
         <div class="header-wrap">
           <div class="header-title">幸运大转盘</div>
@@ -89,42 +14,8 @@
               </div>
             </div>
             <div class="content-wrapper">
-              <div class="title-wrap">幸运大转盘</div>
-              <div class="ticket-time">
-                <div class="time-top">
-                  <!-- <TimeTick /> -->
-                  <div class="title-text">剩余时间</div>
-                </div>
-                <div class="time-bottom">
-                  <div class="wysiwyg">
-                    <div class="time-item day">
-                      <div class="num">
-                        {{ timeLeft.days }}
-                      </div>
-                      <div class="title">天</div>
-                    </div>
-                    <div class="time-item">
-                      <div class="num">
-                        {{ timeLeft.hours }}
-                      </div>
-                      <div class="title">时</div>
-                    </div>
-                    <div class="time-item">
-                      <div class="num">
-                        {{ timeLeft.minutes }}
-                      </div>
-                      <div class="title">分</div>
-                    </div>
-                    <div class="time-item">
-                      <div class="num">
-                        {{ timeLeft.seconds }}
-                      </div>
-                      <div class="title">秒</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="">
+              <CountdownTimer :timeLeft="timeLeft" />
+              <div>
                 <div class="ticket-game-wrap">
                   <div class="prize-wheel-wrapper">
                     <div class="wheel_container">
@@ -145,14 +36,13 @@
                                 >
                                   <div class="prize_message">
                                     <span>
-                                      <!-- {{
+                                      {{
                                         prize.prize_amount
-                                          ? `৳ ${prize.prize_amount}`
+                                          ? `${prize.prize_amount}元`
                                           : prize.prize_name
-                                      }} -->
-                                      {{ prize.prize_name }}
+                                      }}
                                     </span>
-                                    <div v-if="false" class="prize_item">
+                                    <div class="prize_item">
                                       <img
                                         v-if="prize.icon"
                                         class="icon"
@@ -230,215 +120,143 @@
         </div>
       </div>
     </div>
+    <!-- 添加中奖弹窗 -->
+    <WinningPopup
+      :value="showWinningPopup"
+      @input="showWinningPopup = $event"
+      :prize="winningPrize"
+    />
   </div>
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
-
-// 模拟API数据
-const mockPrizeList4 = [
-  {
-    prize_name: "測試文案Ａ",
-    prize_amount: 0,
-    prize_id: 1,
-    icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674360.png",
-  },
-  {
-    prize_name: "现金奖励Ａ",
-    prize_amount: 888,
-    prize_id: 2,
-    icon: null,
-  },
-  {
-    prize_name: "现金奖励Ｂ",
-    prize_amount: 188,
-    prize_id: 3,
-    icon: null,
-  },
-  {
-    prize_name: "现金奖励Ｃ",
-    prize_amount: 88,
-    prize_id: 4,
-    icon: null,
-  },
-];
-
-const mockPrizeList8 = [
-  ...mockPrizeList4,
-  {
-    prize_name: "測試文案Ｂ",
-    prize_amount: 3888,
-    prize_id: 5,
-    icon: null,
-  },
-  {
-    prize_name: "測試文案Ｃ",
-    prize_amount: 2888,
-    prize_id: 6,
-    icon: null,
-  },
-  {
-    prize_name: "測試文案Ｄ",
-    prize_amount: 1888,
-    prize_id: 7,
-    icon: null,
-  },
-  {
-    prize_name: "測試文案Ｅ",
-    prize_amount: 588,
-    prize_id: 8,
-    icon: null,
-  },
-];
-
-const mockPrizeList12 = [
-  ...mockPrizeList8,
-  {
-    prize_name: "測試文案Ｆ",
-    prize_amount: 0,
-    prize_id: 9,
-    icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674361.png",
-  },
-  {
-    prize_name: "測試文案Ｇ",
-    prize_amount: 8888,
-    prize_id: 10,
-    icon: null,
-  },
-  {
-    prize_name: "測試文案Ｈ",
-    prize_amount: 6888,
-    prize_id: 11,
-    icon: null,
-  },
-  {
-    prize_name: "測試文案Ｑ",
-    prize_amount: 4888,
-    prize_id: 12,
-    icon: null,
-  },
-];
+import { getPrizeList, getWinnerPrize } from "../api/prizeList";
+import CloseBtn from "./CloseBtn.vue";
+import CountdownTimer from "./CountdownTimer.vue";
+import WinningPopup from "./WinningPopup.vue"; // 引入中奖弹窗组件
 
 export default {
   name: "LuckyWheelModal",
+  components: {
+    CloseBtn,
+    CountdownTimer,
+    WinningPopup, // 注册中奖弹窗组件
+  },
   props: {
-    modelValue: {
+    value: {
+      // 對應 v-model 的 props
       type: Boolean,
       required: true,
     },
   },
-
-  emits: ["update:modelValue"],
-  setup() {
-    const isSpinning = ref(false);
-    const currentRotation = ref(0);
-    const prizeList = ref([]);
-    const wheel = ref(null);
-
-    // 计算转盘类名
-    const wheelNumberClass = computed(() => {
-      const count = prizeList.value.length;
-      return `number_${count}`;
-    });
-
-    // 计算转盘当前旋转样式
-    const rotateStyle = computed(() => ({
-      transform: `rotate(${currentRotation.value}deg)`,
-    }));
-
-    // 获取每个奖品的角度
-    // const getPrizeAngle = (index) => {
-    //   const count = prizeList.value.length;
-    //   return (360 / count) * index;
-    // };
-
-    // 开始抽奖
-    const startSpin = async () => {
-      if (isSpinning.value) return;
-
-      isSpinning.value = true;
-      const winningIndex = Math.floor(Math.random() * prizeList.value.length);
-      const baseRotations = 5; // 基础旋转圈数
-
-      // 计算目标角度：
-      // 1. 获取每个奖品占据的角度
-      const anglePerPrize = 360 / prizeList.value.length;
-      // 2. 计算中奖位置需要旋转的角度（因为我们要让它停在正上方）
-      const targetDegree = 360 - winningIndex * anglePerPrize;
-      // 3. 计算总旋转角度（基础圈数 + 目标角度）
-      const totalRotation = baseRotations * 360 + targetDegree;
-
-      // 使用GSAP进行动画
-      gsap.to(currentRotation, {
-        value: totalRotation,
-        duration: 5, // 增加动画时间使旋转更流畅
-        ease: "power2.out",
-        onComplete: () => {
-          isSpinning.value = false;
-          // 重置旋转角度，保持在0-360之间
-          currentRotation.value = currentRotation.value % 360;
-
-          // 显示中奖信息
-          const prize = prizeList.value[winningIndex];
-          alert(`恭喜您获得: ${prize.prize_name}`);
-        },
-      });
-    };
-
-    // 倒计时相关
-    const timeLeft = ref({
-      days: 4,
-      hours: 23,
-      minutes: 10,
-      seconds: 31,
-    });
-
-    const updateTimer = () => {
-      if (timeLeft.value.seconds > 0) {
-        timeLeft.value.seconds--;
-      } else {
-        if (timeLeft.value.minutes > 0) {
-          timeLeft.value.minutes--;
-          timeLeft.value.seconds = 59;
-        } else {
-          if (timeLeft.value.hours > 0) {
-            timeLeft.value.hours--;
-            timeLeft.value.minutes = 59;
-            timeLeft.value.seconds = 59;
-          } else {
-            if (timeLeft.value.days > 0) {
-              timeLeft.value.days--;
-              timeLeft.value.hours = 23;
-              timeLeft.value.minutes = 59;
-              timeLeft.value.seconds = 59;
-            }
-          }
-        }
-      }
-    };
-
-    let timer = null;
-
-    onMounted(async () => {
-      prizeList.value = mockPrizeList12;
-      timer = setInterval(updateTimer, 1000);
-    });
-
-    onUnmounted(() => {
-      if (timer) clearInterval(timer);
-    });
-
+  data() {
     return {
-      isSpinning,
-      timeLeft,
-      prizeList,
-      wheel,
-      wheelNumberClass,
-      rotateStyle,
-      startSpin,
+      isSpinning: false,
+      currentRotation: 0,
+      prizeList: [],
+      wheel: null,
+      showWinningPopup: false,
+      winningPrize: null,
+      timeLeft: {
+        days: 4,
+        hours: 23,
+        minutes: 10,
+        seconds: 31,
+      },
+      timer: null,
     };
+  },
+  computed: {
+    wheelNumberClass() {
+      const count = this.prizeList.length;
+      return `number_${count}`;
+    },
+    rotateStyle() {
+      return {
+        transform: `rotate(${this.currentRotation}deg)`,
+      };
+    },
+    modelValue: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("input", val);
+      },
+    },
+  },
+  methods: {
+    async loadPrizeList(count = 8) {
+      try {
+        const data = await getPrizeList(count);
+        this.prizeList = data;
+      } catch (error) {
+        console.error("獲取獎品列表失敗:", error);
+      }
+    },
+    async startSpin() {
+      if (this.isSpinning) return;
+      this.isSpinning = true;
+
+      try {
+        const winnerPrize = await getWinnerPrize();
+
+        const winningIndex = this.prizeList.findIndex(
+          (p) => p.prize_id === winnerPrize.prize_id
+        );
+        const anglePerPrize = 360 / this.prizeList.length;
+
+        // 修改角度计算方式，确保顺时针旋转
+        const targetDegree = anglePerPrize * winningIndex;
+        const totalRotation = 360 * 5 - targetDegree;
+
+        gsap.to(this.$data, {
+          currentRotation: totalRotation,
+          duration: 5,
+          ease: "power2.out",
+          onComplete: () => {
+            this.isSpinning = false;
+            this.currentRotation = this.currentRotation % 360;
+            this.winningPrize = winnerPrize;
+            this.showWinningPopup = true;
+          },
+        });
+      } catch (error) {
+        console.error("获取中奖信息失败:", error);
+        this.isSpinning = false;
+      }
+    },
+
+    updateTimer() {
+      if (this.timeLeft.seconds > 0) {
+        this.timeLeft.seconds--;
+      } else if (this.timeLeft.minutes > 0) {
+        this.timeLeft.minutes--;
+        this.timeLeft.seconds = 59;
+      } else if (this.timeLeft.hours > 0) {
+        this.timeLeft.hours--;
+        this.timeLeft.minutes = 59;
+        this.timeLeft.seconds = 59;
+      } else if (this.timeLeft.days > 0) {
+        this.timeLeft.days--;
+        this.timeLeft.hours = 23;
+        this.timeLeft.minutes = 59;
+        this.timeLeft.seconds = 59;
+      }
+    },
+    closeModal() {
+      this.$emit("input", false);
+    },
+  },
+  mounted() {
+    this.loadPrizeList(8);
+    this.timer = setInterval(this.updateTimer, 1000);
+  },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   },
 };
 </script>
@@ -452,225 +270,70 @@ export default {
   left: 0;
   z-index: 100013;
   color: #fff;
-}
 
-.ticket-popup-wrap:before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: -1;
-  background: rgba(0, 0, 0, 0.8);
-}
+  &:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.8);
+  }
 
-.ticket-popup-wrap .arrow-btn {
-  position: absolute;
-  top: 0.52rem;
-  left: 0.42rem;
-  z-index: 1;
-}
+  .ticket-content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-.ticket-popup-wrap .arrow-btn svg {
-  width: 0.56rem;
-  height: 0.56rem;
-}
+    .header-wrap {
+      position: relative;
+      padding-top: 1.12rem;
+      display: flex;
+      justify-content: center;
+      background: url(../assets/header-title-top.png) no-repeat top/4.06rem
+        1.12rem;
+      z-index: -1;
 
-.ticket-popup-wrap .close-btn {
-  position: absolute;
-  top: 0.52rem;
-  right: 0.42rem;
-}
+      .header-title {
+        min-width: 2.46rem;
+        height: 0.65rem;
+        font-size: 0.36rem;
+        position: relative;
+        line-height: 0.58rem;
+        color: #fff;
+        text-shadow: 1px 1px #c63036, -1px 1px #c63036, 1px -1px #c63036,
+          -1px -1px #c63036;
+        text-align: center;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABBCAYAAAAQTc7lAAAALklEQVQYlWP472H8n4nBzoeBiYGBAUZcO8PAxHDvOorYMCX4ZBiYGBjZPzBQAABIhAfla0dJfAAAAABJRU5ErkJggg==)
+          repeat-x left 0 / contain;
+        margin-top: -0.25rem;
+        padding: 0 0.1rem;
 
-.ticket-popup-wrap .close-btn svg {
-  width: 0.56rem;
-  height: 0.56rem;
-}
+        &:before {
+          position: absolute;
+          content: "";
+          width: 0.8rem;
+          height: 0.65rem;
+          left: -0.7rem;
+          background: url(../assets/header-title-left.png) no-repeat 50% /
+            contain;
+        }
 
-.ticket-popup-wrap .ticket-content-wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.ticket-popup-wrap .ticket-content-wrapper .header-wrap {
-  position: relative;
-  padding-top: 1.12rem;
-  display: flex;
-  justify-content: center;
-  background: url(../assets/header-title-top.png) no-repeat top/4.06rem 1.12rem;
-  z-index: -1;
-}
-
-.ticket-popup-wrap .ticket-content-wrapper .header-wrap .header-title {
-  min-width: 2.46rem;
-  height: 0.65rem;
-  font-size: 0.36rem;
-  position: relative;
-  line-height: 0.58rem;
-  color: #fff;
-  text-shadow: 1px 1px #c63036, -1px 1px #c63036, 1px -1px #c63036,
-    -1px -1px #c63036;
-  text-align: center;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABBCAYAAAAQTc7lAAAALklEQVQYlWP472H8n4nBzoeBiYGBAUZcO8PAxHDvOorYMCX4ZBiYGBjZPzBQAABIhAfla0dJfAAAAABJRU5ErkJggg==)
-    repeat-x left 0 / contain;
-  margin-top: -0.25rem;
-  padding: 0 0.1rem;
-}
-
-.ticket-popup-wrap .ticket-content-wrapper .header-wrap .header-title:before {
-  position: absolute;
-  content: "";
-  width: 0.8rem;
-  height: 0.65rem;
-  left: -0.7rem;
-  background: url(../assets/header-title-left.png) no-repeat 50% / contain;
-}
-
-.ticket-popup-wrap .ticket-content-wrapper .header-wrap .header-title:after {
-  position: absolute;
-  content: "";
-  width: 0.8rem;
-  height: 0.65rem;
-  right: -0.7rem;
-  background: url(../assets/header-title-right.png) no-repeat 50% / contain;
-}
-
-.ticket-popup-wrap .ticket-content-wrapper .ticket-popup {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0%;
-  overflow: hidden;
-}
-
-.ticket-popup-wrap .ticket-content-wrapper .ticket-popup-list {
-  width: 100%;
-  margin: 0.4rem 0;
-  padding-top: 0.18rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.22rem;
-  flex: 1 1 0%;
-  overflow-y: auto;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper {
-  color: #fff;
-  text-align: center;
-  margin-top: 0.22rem;
-  width: 100%;
-  padding: 0 0.85rem;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar {
-  width: 100%;
-  position: relative;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar .am-progress-outer {
-  background: #262626 0 0 no-repeat padding-box;
-  border: 0.03rem solid #707070;
-  border-radius: 0.23rem;
-  height: 0.36rem;
-  display: flex;
-  align-items: center;
-  padding: 0 0.12rem;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar .am-progress-bar {
-  background: transparent linear-gradient(180deg, #ffcf00, #ee7c0e) 0 0
-    no-repeat padding-box;
-  border-radius: 0.21rem;
-  height: 0.2rem !important;
-  border: 0;
-  animation: progressAnimationStrike 2s;
-}
-
-.ticket-popup-wrap .progress-bar-wrapper .progress-bar .bar-num {
-  position: absolute;
-  font-size: 0.24rem;
-  line-height: 0.42rem;
-  right: 0.3rem;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  display: flex;
-  align-items: center;
-}
-
-.ticket-time {
-  margin-top: 0.18rem;
-  display: flex;
-  align-items: flex-start;
-  color: #fff;
-  justify-content: center;
-}
-
-.ticket-time .time-top {
-  height: 0.6rem;
-  display: flex;
-  align-items: center;
-  font-size: 0.22rem;
-  margin-right: 0.2rem;
-}
-
-.ticket-time .time-top svg {
-  width: 0.37rem;
-  height: 0.41rem;
-  margin-right: 0.22rem;
-  fill: #ffb30b;
-}
-
-.ticket-time .time-bottom,
-.ticket-time .time-bottom .wysiwyg {
-  display: flex;
-  align-items: center;
-}
-
-.ticket-time .time-bottom .time-item {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-right: 0.21rem;
-}
-
-.ticket-time .time-bottom .time-item:before {
-  position: absolute;
-  content: ":";
-  color: #cecece;
-  font-size: 0.38rem;
-  font-weight: 700;
-  right: -0.15rem;
-}
-
-.ticket-time .time-bottom .time-item.day:before,
-.ticket-time .time-bottom .time-item:last-child:before {
-  display: none;
-}
-
-.ticket-time .time-bottom .time-item .num {
-  width: 0.7rem;
-  height: 0.6rem;
-  background: #262626 0 0 no-repeat padding-box;
-  border: 0.02rem solid #707070;
-  border-radius: 0.08rem;
-  font-size: 0.38rem;
-  font-weight: 700;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ticket-time .time-bottom .time-item .title {
-  color: #a2a2a2;
-  font-size: 0.16rem;
-  line-height: 0.22rem;
-  font-weight: 700;
-  text-align: center;
+        &:after {
+          position: absolute;
+          content: "";
+          width: 0.8rem;
+          height: 0.65rem;
+          right: -0.7rem;
+          background: url(../assets/header-title-right.png) no-repeat 50% /
+            contain;
+        }
+      }
+    }
+  }
 }
 
 .ticket-popup-wrapper {
@@ -680,41 +343,319 @@ export default {
   align-items: center;
   flex: 1 1 0%;
   overflow: hidden;
+
+  .banner-wrap {
+    position: relative;
+    width: 100%;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+
+    .swiper-slide {
+      width: 1.35rem;
+      height: 0.68rem;
+      border-radius: 0.14rem;
+      padding: 0 0.15rem;
+      background: url(../assets/ticket-default.png) no-repeat 50% / cover;
+      font-size: 0.15rem;
+      color: #fff;
+      word-break: break-word;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+
+      .item-name {
+        width: 100%;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        line-height: 1.5;
+        text-align: center;
+      }
+    }
+  }
+
+  .content-wrapper {
+    flex: 1 1 0%;
+    overflow-y: auto;
+    width: 100%;
+    padding: 0 0 0.2rem;
+  }
 }
 
-.ticket-popup-wrapper .banner-wrap {
-  position: relative;
+.ticket-game-wrap {
   width: 100%;
-  height: 1rem;
-  display: flex;
-  align-items: center;
+
+  .prize-wheel-wrapper {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+
+    .wheel_container {
+      position: relative;
+      height: auto;
+    }
+  }
 }
 
-.ticket-popup-wrapper .banner-wrap .swiper-container {
-  width: calc(100% - 2.68rem);
-  display: flex;
-  align-items: center;
-  z-index: 0;
+.prize_wheel_root {
+  position: relative;
+  width: inherit;
+  height: inherit;
+
+  .wheel_bg {
+    background: url(../assets/ticket-type-wheel.png) no-repeat 50% / contain;
+    position: relative;
+    width: 6.9rem;
+    height: 6.45rem;
+    margin: 0 auto;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 6.9rem;
+      height: 6.45rem;
+      background: url(../assets/ticket-type-wheel-bg.png) no-repeat 50% /
+        contain;
+      z-index: -1;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 6.9rem;
+      height: 6.45rem;
+      background: url(../assets/ticket-type-wheel-bg2.png) no-repeat 50% /
+        contain;
+      z-index: -1;
+      animation: pointShow 2s infinite linear;
+    }
+
+    .start_wheel {
+      content: "";
+      position: absolute;
+      background-image: url(../assets/goBtn.png);
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 100;
+      left: 50%;
+      top: 50%;
+      width: 0.9rem;
+      height: 1.22rem;
+      transform: translate(-50%, -50%);
+      margin-top: -10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+
+      &.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+    }
+
+    .wheel_content {
+      border-radius: 50%;
+      width: 69%;
+      position: relative;
+      content: "";
+      height: 63%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 1.1rem;
+      left: 1.05rem;
+
+      ul {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        content: "";
+        position: relative;
+        background-image: url(../assets/wheel.png);
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        will-change: transform;
+        transform-origin: center center;
+      }
+
+      &.number_4 {
+        ul {
+          background-image: url(../assets/wheel_4.png);
+        }
+      }
+
+      &.number_12 {
+        ul {
+          background-image: url(../assets/wheel_12.png);
+        }
+      }
+
+      // 奖品项基础样式
+      ul li {
+        text-align: center;
+        width: 88%;
+        height: 88%;
+        border-radius: 50%;
+        position: absolute;
+        content: "";
+        display: block;
+        justify-content: center;
+
+        .rewardItem {
+          display: flex;
+          flex-wrap: wrap;
+          height: 25%;
+          word-break: break-word;
+          white-space: break-spaces;
+          text-overflow: ellipsis;
+          justify-content: center;
+
+          .prize_message {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+            position: relative;
+            transform: rotate(90deg);
+
+            span {
+              color: #462f2f;
+              font-size: 0.24rem;
+              max-width: 1.4rem;
+              display: -webkit-box !important;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              white-space: normal;
+              overflow: hidden;
+              line-height: 1.5;
+            }
+
+            .prize_item {
+              max-width: 0.5rem;
+              width: 100%;
+              height: 0.5rem;
+              order: -1;
+
+              .icon {
+                width: 100%;
+                height: 100%;
+                background-size: contain;
+                background-repeat: no-repeat;
+                display: block;
+
+                &.icon-MONEY {
+                  background-image: url(../assets/money.png);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // 4个奖品的旋转角度
+      &.number_4 ul {
+        li {
+          @for $i from 0 through 3 {
+            &.item-#{$i} {
+              transform: rotate(#{$i * 90}deg);
+            }
+          }
+
+          .rewardItem .prize_message {
+            width: 2rem;
+          }
+        }
+      }
+
+      // 8个奖品的旋转角度
+      &.number_8 ul {
+        li {
+          @for $i from 0 through 7 {
+            &.item-#{$i} {
+              transform: rotate(#{$i * 45}deg);
+            }
+          }
+
+          .rewardItem .prize_message {
+            width: 1.25rem;
+          }
+        }
+      }
+
+      // 12个奖品的旋转角度
+      &.number_12 ul {
+        li {
+          @for $i from 0 through 11 {
+            &.item-#{$i} {
+              transform: rotate(#{$i * 30}deg);
+            }
+          }
+
+          .rewardItem .prize_message {
+            width: 1rem;
+
+            span {
+              font-size: 0.18rem;
+              height: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .claim-btn {
+    min-width: 3.52rem;
+    margin-top: -0.2rem;
+    font-size: 0.28rem;
+    color: #d63000;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent linear-gradient(180deg, #fff, #f7c163 50%, #f2b03e)
+      0 0 no-repeat padding-box;
+    height: 0.56rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+      background: #999;
+
+      &:hover {
+        transform: none;
+        filter: none;
+      }
+    }
+  }
 }
 
-.ticket-popup-wrapper .banner-wrap .swiper-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.swiper-slide {
-  width: 1.35rem;
-  height: 0.68rem;
-  border-radius: 0.14rem;
-  padding: 0 0.15rem;
-  background: url(../assets/ticket-default.png) no-repeat 50% / cover;
-  font-size: 0.15rem;
-  color: #fff;
-  word-break: break-word;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+@keyframes pointShow {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.8;
+  }
 }
 
 .ticket-popup-wrapper .banner-wrap .swiper-slide.has-img {
@@ -730,16 +671,6 @@ export default {
 .ticket-popup-wrapper .banner-wrap .swiper-slide.swiper-slide-active img {
   width: 1.8rem;
   height: 1rem;
-}
-
-.ticket-popup-wrapper .banner-wrap .swiper-slide .item-name {
-  width: 100%;
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  line-height: 1.5;
-  text-align: center;
 }
 
 @supports (-webkit-line-clamp: 2) {
@@ -780,20 +711,6 @@ export default {
   overflow-y: auto;
   width: 100%;
   padding: 0 0 0.2rem;
-}
-
-.ticket-popup-wrapper .content-wrapper .title-wrap {
-  font-size: 0.28rem;
-  font-weight: 700;
-  position: relative;
-  color: #fff;
-  padding: 0.1rem 0.85rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  -webkit-text-stroke: 0.5px #ffb30b;
-  -webkit-text-fill-color: #fff;
-  text-align: center;
 }
 
 .ticket-condition-wrap {
@@ -1077,17 +994,6 @@ export default {
   overflow-y: auto;
 }
 
-.ticket-share-wrapper .close-btn {
-  position: absolute;
-  top: 0.35rem;
-  right: 0.3rem;
-}
-
-.ticket-share-wrapper .close-btn svg {
-  width: 0.44rem;
-  height: 0.44rem;
-}
-
 .ticket-share-wrapper .share-title {
   font-size: 0.32rem;
   color: #efefef;
@@ -1315,46 +1221,17 @@ export default {
   margin: -0.175rem 0 0 -0.24rem;
 }
 
-// .ticket-list-item .item-top-wrap .item-tag.RAFFLE:before {
-//   background: url(../assets/reward-redpacket.8083938f.png) no-repeat 50% /
-//     contain;
-// }
-
-// .ticket-list-item .item-top-wrap .item-tag.CASH_VOUCHER:before {
-//   background: url(../assets/reward-cashbox.6edaa189.png) no-repeat 50% / contain;
-// }
-
-// .ticket-list-item .item-top-wrap .item-tag.GOLDEN_EGG:before {
-//   background: url(../assets/reward-goldegg.be492491.png) no-repeat 50% / contain;
-// }
-
-// .ticket-list-item .item-top-wrap .item-tag.GIFT_CODE:before {
-//   background: url(../assets/reward-giftbox.87d9cf98.png) no-repeat 50% / contain;
-// }
-
-// .ticket-list-item .item-top-wrap .item-tag.PRIZE_WHEEL:before {
-//   background: url(../assets/reward-wheel.bd54bd8d.png) no-repeat 50% / contain;
-// }
-
-// .ticket-list-item .item-top-wrap .item-tag.FREE_SPIN:before {
-//   background: url(../assets/free-spin.ccfd0583.png) no-repeat 50% / contain;
-// }
-
-.ticket-list-item .item-top-wrap .item-count .wysiwyg {
+.ticket-list-item .item-top-wrap .item-count .days {
   display: flex;
   align-items: center;
   font-size: 0.22rem;
 }
 
-.ticket-list-item .item-top-wrap .item-count .wysiwyg .num {
+.ticket-list-item .item-top-wrap .item-count .days .num {
   position: relative;
 }
 
-.ticket-list-item
-  .item-top-wrap
-  .item-count
-  .wysiwyg
-  .num:not(:last-child):after {
+.ticket-list-item .item-top-wrap .item-count .days .num:not(:last-child):after {
   content: ":";
   margin: 0 0.05rem;
 }
@@ -1627,202 +1504,8 @@ export default {
   height: 0.12rem;
 }
 
-.progress-wrapper {
-  width: 100%;
-}
-
-.progress-wrapper .money-wrapper {
-  height: 0.72rem;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: relative;
-  margin-bottom: 0.18rem;
-}
-
-.progress-wrapper .money-wrapper .money-current-item {
-  position: relative;
-  padding: 0 0.12rem 0 0.87rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #fff;
-  display: flex;
-  height: 100%;
-  gap: 0.12rem;
-}
-
-.progress-wrapper .money-wrapper .money-current-item:before {
-  position: absolute;
-  content: "";
-  width: 0.75rem;
-  height: 0.72rem;
-  left: 0;
-  background: url(../assets/money.png) no-repeat 50% / contain;
-}
-
-.progress-wrapper .money-wrapper .money-item {
-  font-size: 0.32rem;
-  font-weight: 700;
-  position: relative;
-  padding-left: 0.24rem;
-}
-
-.progress-wrapper .money-wrapper .money-item:before {
-  position: absolute;
-  content: "/";
-  left: 0;
-}
-
-.progress-wrapper .get-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.24rem;
-  margin: 0.3rem 0 0.2rem;
-}
-
-.progress-wrapper .get-info .info-num {
-  font-size: 0.3rem;
-  color: #ffcf00;
-  position: relative;
-  padding: 0 0.14rem;
-}
-
-.progress-wrapper .get-info .info-num:before {
-  position: absolute;
-  content: "!!";
-  right: -0.14rem;
-  color: #fff;
-  font-size: 0.24rem;
-}
-
-.modal-free-spin .am-modal-content {
-  max-height: 90vh;
-  max-height: calc(var(--vh, 1vh) * 90);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.modal-free-spin .am-modal-header {
-  padding: 0.03rem 0.51rem 0.3rem;
-}
-
-.modal-free-spin .am-modal-body {
-  padding: 0 0.51rem;
-  flex: 1 1 0%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-free-spin .am-modal-body img {
-  max-width: 100%;
-}
-
-.modal-free-spin .modal-spin-info {
-  flex: 1 1 0%;
-  font-size: 0.24rem;
-  color: #6e6e6e;
-  overflow-y: auto;
-}
-
-.modal-free-spin .am-modal-button {
-  border-top: none;
-  width: -webkit-max-content;
-  width: max-content;
-  height: 0.64rem;
-  padding: 0 0.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.2rem;
-  background: #fd2f2f;
-  font-size: 0.3rem;
-  font-weight: 900;
-  color: #fff;
-  margin: 0 auto 0.33rem;
-}
-
-.progress-wrapper {
-  width: 100%;
-}
-
-.progress-wrapper .money-wrapper {
-  height: 0.72rem;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: relative;
-  margin-bottom: 0.18rem;
-}
-
-.progress-wrapper .money-wrapper .money-current-item {
-  position: relative;
-  padding: 0 0.12rem 0 0.87rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #fff;
-  display: flex;
-  height: 100%;
-  gap: 0.12rem;
-}
-
-.progress-wrapper .money-wrapper .money-current-item:before {
-  position: absolute;
-  content: "";
-  width: 0.75rem;
-  height: 0.72rem;
-  left: 0;
-  background: url(../assets/money.png) no-repeat 50% / contain;
-}
-
-.progress-wrapper .money-wrapper .money-item {
-  font-size: 0.32rem;
-  font-weight: 700;
-  position: relative;
-  padding-left: 0.24rem;
-}
-
-.progress-wrapper .money-wrapper .money-item:before {
-  position: absolute;
-  content: "/";
-  left: 0;
-}
-
-.progress-wrapper .get-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.24rem;
-  margin: 0.3rem 0 0.2rem;
-}
-
-.progress-wrapper .get-info .info-num {
-  font-size: 0.3rem;
-  color: #ffcf00;
-  position: relative;
-  padding: 0 0.14rem;
-}
-
-.progress-wrapper .get-info .info-num:before {
-  position: absolute;
-  content: "!!";
-  right: -0.14rem;
-  color: #fff;
-  font-size: 0.24rem;
-}
-
-@keyframes lightRotate {
-  0% {
-    scale: 0.6;
-    transform: rotate(0deg);
-  }
-
-  to {
-    scale: 1;
-    transform: rotate(1turn);
-  }
+.icon-MONEY {
+  background-image: url(../assets/money.png);
 }
 
 @keyframes rotate {
@@ -1835,51 +1518,8 @@ export default {
   }
 }
 
-@keyframes open {
-  0% {
-    scale: 0;
-  }
-
-  to {
-    scale: 1;
-  }
-}
-
 .ticket-game-wrap {
   width: 100%;
-}
-
-.ticket-game-wrap .gold-egg-wrapper {
-  width: 100%;
-  margin: 0.32rem 0 0;
-}
-
-.ticket-game-wrap .gold-egg-wrapper .getEgg_container {
-  width: 100%;
-  text-align: center;
-}
-
-.ticket-game-wrap
-  .gold-egg-wrapper
-  .getEgg_container
-  .ticket_message.messageOpen {
-  transform: translate(-50%, -50%) scale(0.8);
-}
-
-.ticket-game-wrap
-  .gold-egg-wrapper
-  .getEgg_container
-  .ticket_message.messageOpen
-  .lossMessage {
-  color: #332b28 !important;
-}
-
-.ticket-game-wrap .gold-egg-wrapper .gold_egg_root .claim-btn {
-  margin: 0.3rem auto 0;
-}
-
-.ticket-game-wrap .gold-egg-wrapper .message_mask.messageOpen {
-  top: 0;
 }
 
 .ticket-game-wrap .prize-wheel-wrapper {
@@ -1907,17 +1547,6 @@ export default {
   height: inherit;
 }
 
-.ticket-game-wrap
-  .prize-wheel-wrapper
-  .prize_wheel_root
-  .wheel_bg
-  .start_wheel {
-  width: 0.9rem;
-  height: 1.22rem;
-  bottom: 2.8rem;
-  left: 3.05rem;
-}
-
 .prize_wheel_root .wheel_bg .start_wheel {
   content: "";
   position: absolute;
@@ -1926,6 +1555,19 @@ export default {
   background-repeat: no-repeat;
   background-size: contain;
   z-index: 100;
+  left: 50%;
+  top: 50%;
+  width: 0.9rem;
+  height: 1.22rem;
+  transform: translate(-50%, -50%);
+  margin-top: -10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
 
 .ticket-game-wrap .prize-wheel-wrapper .prize_wheel_root .wheel_bg {
@@ -1945,7 +1587,6 @@ export default {
   height: 6.45rem;
   background: url(../assets/ticket-type-wheel-bg.png) no-repeat 50% / contain;
   z-index: -1;
-  animation: spinWheel 5s infinite linear;
 }
 
 .ticket-game-wrap .prize-wheel-wrapper .prize_wheel_root .wheel_bg:after {
@@ -2382,17 +2023,6 @@ export default {
   order: -1;
   max-width: 0.4rem;
   height: 0.32rem;
-}
-
-.ticket-game-wrap
-  .prize-wheel-wrapper
-  .prize_wheel_root
-  .wheel_bg
-  .start_wheel {
-  width: 0.9rem;
-  height: 1.22rem;
-  bottom: 2.8rem;
-  left: 3.05rem;
 }
 
 .ticket-game-wrap .prize-wheel-wrapper .prize_wheel_root .claim-btn {
@@ -3418,25 +3048,6 @@ export default {
   display: block;
 }
 
-// 添加新的样式
-.start_wheel {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &.disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-
-    &:hover {
-      transform: none;
-    }
-  }
-}
-
 .claim-btn {
   cursor: pointer;
   transition: all 0.3s ease;
@@ -3458,7 +3069,15 @@ export default {
   }
 }
 
-// 添加转盘旋转动画
+.wheel_content {
+  ul {
+    transition: none; // 移除这个 transition，让 gsap 完全控制动画
+    will-change: transform;
+    transform-origin: center center;
+  }
+}
+
+// 移除这个动画，因为它会影响整个转盘的旋转
 @keyframes spinWheel {
   from {
     transform: rotate(0deg);
@@ -3468,9 +3087,25 @@ export default {
   }
 }
 
-.wheel_content {
+.ticket-game-wrap .prize-wheel-wrapper .prize_wheel_root .wheel_bg:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 6.9rem;
+  height: 6.45rem;
+  background: url(../assets/ticket-type-wheel-bg.png) no-repeat 50% / contain;
+  z-index: -1;
+}
+
+// 确保转盘的初始状态和过渡效果正确
+.prize_wheel_root .wheel_bg .wheel_content {
   ul {
-    transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    position: relative;
+    transform: rotate(0deg);
+    // 让 GSAP 完全控制动画，移除默认的 transition
+    transition: none;
   }
 }
+// ... existing code ...
 </style>

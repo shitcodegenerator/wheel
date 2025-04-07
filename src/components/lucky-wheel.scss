@@ -13786,7 +13786,7 @@ a.trans-checked {
   font-weight: 600;
 }
 
-.rankRewardDetail-wrapper .unlock-time-wrapper .unlock-time .wysiwyg {
+.rankRewardDetail-wrapper .unlock-time-wrapper .unlock-time .days {
   display: flex;
   align-items: center;
   gap: 0.1rem;
@@ -20617,7 +20617,7 @@ body .styles_overlay__CLSq- {
   padding: 0;
 }
 
-.deposit-promo-v2 .act-container .act-item .wysiwyg {
+.deposit-promo-v2 .act-container .act-item .days {
   padding-bottom: 0;
 }
 
@@ -20675,7 +20675,7 @@ body .styles_overlay__CLSq- {
   padding-bottom: 0.14rem;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg {
+#vc-v2-active .act-prom-remark-v2 .days {
   margin-top: 0.08rem;
   display: inline-block;
   word-break: keep-all;
@@ -20687,15 +20687,15 @@ body .styles_overlay__CLSq- {
   max-height: 0.3rem;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg br {
+#vc-v2-active .act-prom-remark-v2 .days br {
   display: none;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg > :not(:first-child) {
+#vc-v2-active .act-prom-remark-v2 .days > :not(:first-child) {
   display: none !important;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg p {
+#vc-v2-active .act-prom-remark-v2 .days p {
   white-space: nowrap !important;
 }
 
@@ -37939,7 +37939,7 @@ body .styles_overlay__CLSq- {
   font-size: 0.24rem;
 }
 
-.withdraw-tips.no-allow .withdraw-tips-content .wysiwyg {
+.withdraw-tips.no-allow .withdraw-tips-content .days {
   padding-bottom: 0;
 }
 
@@ -37977,11 +37977,11 @@ body .styles_overlay__CLSq- {
   color: #ee5a5a;
 }
 
-.withdraw-tips-content .tips-title .wysiwyg {
+.withdraw-tips-content .tips-title .days {
   line-height: normal;
 }
 
-.withdraw-tips-content .wysiwyg {
+.withdraw-tips-content .days {
   padding-bottom: 0.3rem;
   letter-spacing: 0.03rem;
 }
@@ -40560,7 +40560,7 @@ body .styles_overlay__CLSq- {
   margin-top: 0.2rem;
 }
 
-.deposit-promo .act-container .act-item .wysiwyg {
+.deposit-promo .act-container .act-item .days {
   padding-bottom: 0;
 }
 
@@ -40619,7 +40619,7 @@ body .styles_overlay__CLSq- {
   padding-bottom: 0.14rem;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg {
+#vc-v2-active .act-prom-remark-v2 .days {
   display: inline-block;
   word-break: keep-all;
   white-space: nowrap !important;
@@ -40629,15 +40629,15 @@ body .styles_overlay__CLSq- {
   padding-right: 1.2rem;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg br {
+#vc-v2-active .act-prom-remark-v2 .days br {
   display: none;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg > :not(:first-child) {
+#vc-v2-active .act-prom-remark-v2 .days > :not(:first-child) {
   display: none !important;
 }
 
-#vc-v2-active .act-prom-remark-v2 .wysiwyg p {
+#vc-v2-active .act-prom-remark-v2 .days p {
   white-space: nowrap !important;
 }
 
@@ -44594,7 +44594,7 @@ body .styles_overlay__CLSq- {
   height: 100%;
 }
 
-#mc-animate-container .sigin-container .wysiwyg {
+#mc-animate-container .sigin-container .days {
   color: unset;
 }
 
@@ -44912,26 +44912,26 @@ body .styles_overlay__CLSq- {
   padding: 0;
 }
 
-.sigin-c-footer .wysiwyg,
-.sigin-c-remarks .wysiwyg {
+.sigin-c-footer .days,
+.sigin-c-remarks .days {
   overflow-x: auto;
 }
 
-.sigin-c-footer .wysiwyg::-webkit-scrollbar,
-.sigin-c-remarks .wysiwyg::-webkit-scrollbar {
+.sigin-c-footer .days::-webkit-scrollbar,
+.sigin-c-remarks .days::-webkit-scrollbar {
   width: 0.06rem;
   height: 0.06rem;
   background-color: #69696940;
 }
 
-.sigin-c-footer .wysiwyg::-webkit-scrollbar-thumb,
-.sigin-c-remarks .wysiwyg::-webkit-scrollbar-thumb {
+.sigin-c-footer .days::-webkit-scrollbar-thumb,
+.sigin-c-remarks .days::-webkit-scrollbar-thumb {
   background-color: #9a9a9a;
   border-radius: 0.1rem;
 }
 
-.sigin-c-footer .wysiwyg::-webkit-scrollbar-track,
-.sigin-c-remarks .wysiwyg::-webkit-scrollbar-track {
+.sigin-c-footer .days::-webkit-scrollbar-track,
+.sigin-c-remarks .days::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
@@ -45057,18 +45057,18 @@ body .styles_overlay__CLSq- {
 }
 
 .has-price.ck {
-  background: url(../assets/right.a20221ee.png) no-repeat 0.46rem 0.32rem/.48rem
+  background: url(../assets/right.a20221ee.png) no-repeat 0.46rem 0.32rem/0.48rem
       0.48rem,
-    url(../assets/coin_s.7c8d9f11.png) no-repeat 0.04rem/.74rem 0.74rem;
+    url(../assets/coin_s.7c8d9f11.png) no-repeat 0.04rem/0.74rem 0.74rem;
 }
 
 .has-score {
-  background: url(../assets/ticket.06389a91.png) no-repeat 0.04rem/.79rem
+  background: url(../assets/ticket.06389a91.png) no-repeat 0.04rem/0.79rem
     0.51rem;
 }
 
 .has-price-gray {
-  background: url(../assets/coin_s_bw.183e01be.png) no-repeat 0.04rem/.74rem
+  background: url(../assets/coin_s_bw.183e01be.png) no-repeat 0.04rem/0.74rem
     0.74rem;
 }
 
@@ -45095,7 +45095,7 @@ body .styles_overlay__CLSq- {
 
 .has-score-gray {
   line-height: 0.65rem;
-  background: url(../assets/ticket_bw.79cbdad0.png) no-repeat 0.04rem/.79rem
+  background: url(../assets/ticket_bw.79cbdad0.png) no-repeat 0.04rem/0.79rem
     0.51rem;
   width: 0.9rem;
 }
@@ -45874,7 +45874,7 @@ body.invite-friends {
   overflow-y: auto;
 }
 
-.invite-code-modal .invite-friends-con .invite-friends-content .wysiwyg {
+.invite-code-modal .invite-friends-con .invite-friends-content .days {
   flex: 1 1 0%;
   padding: 0 0.1rem;
   overflow: auto;
@@ -45883,7 +45883,7 @@ body.invite-friends {
 .invite-code-modal
   .invite-friends-con
   .invite-friends-content
-  .wysiwyg
+  .days
   strong
   span {
   display: inline-block;
@@ -46062,7 +46062,7 @@ body.invite-friends {
   font-weight: 700;
 }
 
-.invite-friends-container .amount-detail .wysiwyg {
+.invite-friends-container .amount-detail .days {
   padding-bottom: 0;
   line-height: 1;
 }
@@ -46276,11 +46276,7 @@ body.invite-friends {
   text-align: left;
 }
 
-.invite-friends-container
-  .invite-friends-goals
-  .goals-top
-  .goals-title
-  .wysiwyg {
+.invite-friends-container .invite-friends-goals .goals-top .goals-title .days {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -46399,7 +46395,7 @@ body.invite-friends {
   object-fit: contain;
 }
 
-.invite-friends-container .invite-friends-how .wysiwyg {
+.invite-friends-container .invite-friends-how .days {
   padding-bottom: 0;
   text-align: initial;
 }
@@ -47273,7 +47269,7 @@ body.invite-friends {
   margin: 0 0 0.3rem;
 }
 
-.invite-friends-rewards .rewards-banner .wysiwyg {
+.invite-friends-rewards .rewards-banner .days {
   padding-bottom: 0;
 }
 
@@ -47395,7 +47391,7 @@ body.invite-friends {
   .rewards-item
   .item-content
   .item-title
-  .wysiwyg {
+  .days {
   max-height: 2.44rem;
   overflow: hidden auto;
   padding-bottom: 0;
@@ -51590,16 +51586,16 @@ body.invite-friends {
   border: inherit;
 }
 
-.v-base .wysiwyg {
+.v-base .days {
   padding-bottom: 0.5rem;
   line-height: 1.5;
 }
 
-.v-base .wysiwyg * {
+.v-base .days * {
   line-height: 1.5;
 }
 
-.v-base .wysiwyg ul {
+.v-base .days ul {
   white-space: normal;
   list-style: disc;
   padding-left: 2.5em;
@@ -51607,7 +51603,7 @@ body.invite-friends {
   margin-bottom: 1em;
 }
 
-.v-base .wysiwyg ul li {
+.v-base .days ul li {
   display: list-item !important;
   list-style: disc outside;
   overflow: visible;
@@ -51617,7 +51613,7 @@ body.invite-friends {
   margin-left: 0;
 }
 
-.v-base .wysiwyg ol {
+.v-base .days ol {
   white-space: normal;
   list-style: decimal;
   padding-left: 2.5em;
@@ -51625,7 +51621,7 @@ body.invite-friends {
   margin-bottom: 1em;
 }
 
-.v-base .wysiwyg ol li {
+.v-base .days ol li {
   display: list-item !important;
   list-style: decimal outside;
   overflow: visible;
@@ -51750,19 +51746,19 @@ body.invite-friends {
   background-image: linear-gradient(top, #715e48, #28221e 50%, #715e48);
 }
 
-.am-list-body .wysiwyg,
-.am-popup-body .wysiwyg {
+.am-list-body .days,
+.am-popup-body .days {
   padding-bottom: 0.5rem;
   line-height: 1.5;
 }
 
-.am-list-body .wysiwyg *,
-.am-popup-body .wysiwyg * {
+.am-list-body .days *,
+.am-popup-body .days * {
   line-height: 1.5;
 }
 
-.am-list-body .wysiwyg ul,
-.am-popup-body .wysiwyg ul {
+.am-list-body .days ul,
+.am-popup-body .days ul {
   white-space: normal;
   list-style: disc;
   padding-left: 2.5em;
@@ -51770,8 +51766,8 @@ body.invite-friends {
   margin-bottom: 1em;
 }
 
-.am-list-body .wysiwyg ul li,
-.am-popup-body .wysiwyg ul li {
+.am-list-body .days ul li,
+.am-popup-body .days ul li {
   display: list-item !important;
   list-style: disc outside;
   overflow: visible;
@@ -51781,8 +51777,8 @@ body.invite-friends {
   margin-left: 0;
 }
 
-.am-list-body .wysiwyg ol,
-.am-popup-body .wysiwyg ol {
+.am-list-body .days ol,
+.am-popup-body .days ol {
   white-space: normal;
   list-style: decimal;
   padding-left: 2.5em;
@@ -51790,8 +51786,8 @@ body.invite-friends {
   margin-bottom: 1em;
 }
 
-.am-list-body .wysiwyg ol li,
-.am-popup-body .wysiwyg ol li {
+.am-list-body .days ol li,
+.am-popup-body .days ol li {
   display: list-item !important;
   list-style: decimal outside;
   overflow: visible;
@@ -58311,4 +58307,8 @@ body.invite-friends {
 
 .payment-confirm #previewImg {
   width: 2.5rem;
+}
+
+.icon-MONEY {
+    background-image: url(../assets/money.png)
 }
