@@ -38,17 +38,14 @@ export const getPrizeList = async (count = 8) => {
  * 获取中奖信息
  * @returns {Promise<Object>} 中奖信息
  */
-export const getWinnerPrize = async () => {
+export const getWinnerPrize = async (prizeAmount = 8) => {
   // 模拟网络延迟
   await new Promise(resolve => setTimeout(resolve, 300));
   
   if (USE_MOCK) {
     // 模拟中奖数据
     return {
-      prize_id: 2,
-      prize_name: "现金奖励Ａ",
-      prize_amount: 888,
-      icon: "https://images.1138403.com/mcs-images/ticket/gtppbdtf4/3195047_1739618674360.png",
+      prize_id: Math.floor(Math.random() * prizeAmount) + 1,
     };
   }
 

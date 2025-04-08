@@ -65,6 +65,11 @@
               </div>
             </div>
             <ProgressBar :progress="75" />
+            <span>{{
+              winnerPrize
+                ? `${winnerPrize.prize_name} - ${winnerPrize.prize_amount}元`
+                : "空"
+            }}</span>
           </div>
         </div>
       </div>
@@ -72,7 +77,7 @@
     <!-- 添加中奖弹窗 -->
     <WinningPopup
       :value="showWinningPopup"
-      :prize="winningPrize"
+      :prize="winnerPrize"
       @input="showWinningPopup = $event"
     />
   </div>
@@ -107,7 +112,7 @@ export default {
       currentRotation: 0,
       prizeList: [],
       showWinningPopup: false,
-      winningPrize: null,
+      winnerPrize: null,
       timeLeft: {
         days: 4,
         hours: 23,
@@ -158,11 +163,13 @@ export default {
       this.isSpinning = true;
 
       try {
-        const winnerPrize = await getWinnerPrize();
+        const winner = await getWinnerPrize(this.prizeList.length);
 
         const winningIndex = this.prizeList.findIndex(
-          (p) => p.prize_id === winnerPrize.prize_id
+          (p) => p.prize_id === winner.prize_id
         );
+
+        this.winnerPrize = this.prizeList[winningIndex];
         const anglePerPrize = 360 / this.prizeList.length;
 
         const targetDegree = anglePerPrize * winningIndex;
@@ -175,7 +182,6 @@ export default {
           onComplete: () => {
             this.isSpinning = false;
             this.currentRotation = this.currentRotation % 360;
-            this.winningPrize = winnerPrize;
             this.showWinningPopup = true;
           },
         });
@@ -363,6 +369,7 @@ export default {
   }
   &::before {
     background: url(../assets/ticket-type-wheel-bg.png) center/contain no-repeat;
+    animation: spinWheel 2s infinite linear;
   }
   &::after {
     background: url(../assets/ticket-type-wheel-bg2.png) center/contain
@@ -532,6 +539,16 @@ export default {
       transform: none;
       filter: none;
     }
+  }
+}
+
+@keyframes spinWheel {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(1turn);
   }
 }
 </style>
